@@ -92,17 +92,17 @@ def adapter_content(parsed_file):
                 'SOLID Small RNA Adapter': 'CCACTACGCCTCCGCTTTCCTCTCTATGGGCAGTCGGTGAT'}
 
     adap_check = {'Illumina Universal Adapter': [],
-                'Illumina Small RNA 3\' Adapter': [],
-                'Illumina Small RNA 5\' Adapter': [],
-                'Nextera Transposase Sequence 1': [],
-                'Nextera Transposase Sequence 2': [],
-                'SOLID Small RNA Adapter': []}
+                  'Illumina Small RNA 3\' Adapter': [],
+                  'Illumina Small RNA 5\' Adapter': [],
+                  'Nextera Transposase Sequence 1': [],
+                  'Nextera Transposase Sequence 2': [],
+                  'SOLID Small RNA Adapter': []}
 
     colors = {'Illumina Universal Adapter': '#D14139',
-                'Illumina Small RNA 3\' Adapter': '#1D2DD8',
-                'Illumina Small RNA 5\' Adapter': '#73DF57',
-                'Nextera Transposase Sequence 1': 'purple',
-                'Nextera Transposase Sequence 2': '#6D6D6D',
+              'Illumina Small RNA 3\' Adapter': '#1D2DD8',
+              'Illumina Small RNA 5\' Adapter': '#73DF57',
+              'Nextera Transposase Sequence 1': 'purple',
+              'Nextera Transposase Sequence 2': '#6D6D6D',
                 'SOLID Small RNA Adapter': '#EC69F8'}
     max_val = 0
     min_key = max(map(len, lines_reads))
@@ -120,7 +120,7 @@ def adapter_content(parsed_file):
 
     for adap in adap_check:
         c_dict = Counter(adap_check[adap])
-        adap_check[adap] = {k:v for k, v in sorted(c_dict.items(), key=lambda x: x[0])}
+        adap_check[adap] = {k: v for k, v in sorted(c_dict.items(), key=lambda x: x[0])}
 
     for keys, vals in adap_check.items():
         for key, val in vals.items():
