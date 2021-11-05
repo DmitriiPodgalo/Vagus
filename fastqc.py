@@ -103,7 +103,7 @@ def adapter_content(parsed_file):
               'Illumina Small RNA 5\' Adapter': '#73DF57',
               'Nextera Transposase Sequence 1': 'purple',
               'Nextera Transposase Sequence 2': '#6D6D6D',
-                'SOLID Small RNA Adapter': '#EC69F8'}
+              'SOLID Small RNA Adapter': '#EC69F8'}
     max_val = 0
     min_key = max(map(len, lines_reads))
     max_key = 0
