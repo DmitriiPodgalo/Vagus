@@ -169,16 +169,16 @@ def adapter_content(parsed_file):
 def read_file(file_path):
     parsed_file = []
     temp_list = []
-    
+
     with open(file_path) as inf:
-        
+
         for line in inf:
             temp_list.append(line.rstrip())
-            
+
             if len(temp_list) == 4:
                 parsed_file.append(temp_list)
                 temp_list = []
- 
+
     return parsed_file
 
 
