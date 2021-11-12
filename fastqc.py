@@ -168,16 +168,17 @@ def adapter_content(parsed_file):
 
 def read_file(file_path):
     parsed_file = []
-    with open(file_path) as f:
-        file = list(map(str.rstrip, f.readlines()))
-        f1 = file[::4]
-        f2 = file[1::4]
-        f3 = file[2::4]
-        f4 = file[3::4]
-        for i in range(0, int(len(file)/4)):
-            one_read = [f1[i], f2[i], f3[i], f4[i]]
-            parsed_file.append(one_read)
-
+    temp_list = []
+    
+    with open(file_path) as inf:
+        
+        for line in inf:
+            temp_list.append(line.rstrip())
+            
+            if len(temp_list) == 4:
+                parsed_file.append(temp_list)
+                temp_list = []
+ 
     return parsed_file
 
 
