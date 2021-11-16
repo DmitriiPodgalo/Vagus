@@ -181,6 +181,9 @@ def read_file(file_path):
                 parsed_file.append(temp_list)
                 temp_list = []
 
+        if len(temp_list) != 0:
+            raise Exception('Invalid number of file\'s lines')
+
     return parsed_file
 
 
