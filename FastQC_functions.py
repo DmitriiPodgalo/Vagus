@@ -94,7 +94,7 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual):
                 medianprops=dict(linewidth=0.5, color='red'))
     # We process dictionary in order to set x and y for the plot:
     lists = sorted(dict_mean_qual.items())  # sorted by key, return a list of tuples
-    x2, y2 = zip(*lists) # unpack a list of pairs into two tuples
+    x2, y2 = zip(*lists)  # unpack a list of pairs into two tuples
     # And also draw the mean plot:
     plt.plot(x2, y2, color="blue", linewidth=0.5)
     # Some improvements to make the plot easier to read:
