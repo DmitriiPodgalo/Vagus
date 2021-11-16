@@ -23,7 +23,7 @@ def sequence_length_distribution(parsed_file):
         ys = seq_dict.values()
 
     while True:
-        if len(seq_dict) // counter < 10:
+        if (max(xs) - min(xs) + 1) // counter < 10:
             xticks = (list(range(min(xs), max(xs) + 1, counter)))
             break
         counter += 1
