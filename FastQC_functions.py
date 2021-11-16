@@ -12,6 +12,7 @@ def process_file(input_fastq):
         reads = [identifier, seq, plus, quality]
     return reads
 
+
 # 1. Per base sequence quality
 
 
@@ -102,8 +103,8 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual):
     plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2), size=7)
     plt.title('Quality scores across all bases', size=8)
     plt.xlabel('Position in read', size=8)
+    plt.savefig('Per_base_sequence_quality.png')
     plt.show()
-    # plt.savefig('Per_base_sequence_quality.png')
 
 
 # 2. Per sequence quality scores
@@ -156,8 +157,8 @@ def plot_per_seq_quality_scores(d):
     plt.yticks(np.arange(0, max(d.values())+10000, step=10000), size=8)
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
+    plt.savefig('Per_sequence_quality_scores.png')
     plt.show()
-    # plt.savefig('Per_sequence_quality_scores.png')
 
 
 # 3. Per base sequence content
@@ -247,8 +248,8 @@ def plot_per_base_seq_content(lst_proportions):
     plt.title('Sequence content across all bases', size=8)
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
+    plt.savefig('Per_base_sequence_content.png')
     plt.show()
-    # plt.savefig('Per_base_sequence_content.png')
 
 
 # Sample input
