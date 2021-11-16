@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "Vagus. FASTQ quality tool"
+version = "0.1"
+description = "FASTQC-like tool"
+repository = "https://github.com/DmitriiPodgalo/Vagus"
+authors = ["Y. Burankova, A. Gorbonos, A. Tokareva, D. Podgalo"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+Jinja2 = "3.0.2"
+
+typer = "^0"
+
+matplotlib = "3.5.0"
+scipy="1.7.2"
+numpy="1.21.4"
+
+
+[tool.poetry.scripts]
+xxx = "xxx.cli:main"
