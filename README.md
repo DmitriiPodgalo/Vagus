@@ -32,10 +32,10 @@ pip install -r ./requirements.txt
 
 ## Run file
 ```console
-python3.10 parsing_report.py
+python3.10 parsing_report.py --input "input_file.fastq"
 ```
 
-# Install and run with poetry
+# Install and run with poetry (Ubuntu)
 ```console
 # install poetry
 # for details look for https://python-poetry.org/docs/
@@ -56,4 +56,29 @@ poetry env use python3.10
 poetry install
 
 # Run
-poetry run python parsing_report.py
+poetry run python parsing_report.py --input "input_file.fastq"
+```
+
+
+# Install and run with poetry (Windows)
+```console
+## run PowerShell as administrator!
+
+# install poetry (Poetry 1.1.11)
+# for details look for https://python-poetry.org/docs/
+(Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+
+## close the PowerShell administrator mode.
+
+# prepare project
+git clone https://github.com/DmitriiPodgalo/Vagus.git
+
+# if you install it not from main or master, change branch
+git checkout branch_name
+
+# Install requirements
+poetry env use python
+poetry install
+
+# Run
+poetry run parsing_report.py --input "input_file.fastq"
