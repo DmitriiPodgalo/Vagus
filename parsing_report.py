@@ -7,7 +7,7 @@ import typer
 import jinja2
 
 import fastqc
-import FastQC_gorbonos
+import FastQC_functions
 
 
 app = typer.Typer()
@@ -24,6 +24,17 @@ def prepair_data(input):
     sequence_length_distribution_result = fastqc.sequence_length_distribution(parsed_file)
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file)
     adapter_content_result = fastqc.adapter_content(parsed_file)
+
+    # 1
+    qualities_per_base = calculate_quality_per_base(parsed_file)
+    dict_mean_qual = calculate_mean_quality_per_base(parsed_file)
+    plot_per_base_seq_quality(qualities_per_base, dict_mean_qual)
+    # 2
+    d = per_sequence_quality(parsed_file)
+    plot_per_seq_quality_scores(d)
+    # 3
+    lst_proportions = per_base_nucleotides_proportion(parsed_file)
+    plot_per_base_seq_content(lst_proportions)
 
     context = {'now': datetime.datetime.utcnow(),
                'file': input,
