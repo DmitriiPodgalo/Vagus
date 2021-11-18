@@ -43,7 +43,7 @@ def max_read_length(lst):
 def calculate_quality_per_base(reads):
     '''
     Function that calculates quality score per base.
-    The positions(bp) will be the keys in this dictionary 
+    The positions(bp) will be the keys in this dictionary
     and the values will contain the lists of quality scores in each position.
     We process the 3rd element of 'reads' list (quality score sequences)
 
@@ -93,7 +93,7 @@ def calculate_mean_quality_per_base(qualities_per_base):
     return dict_mean_qual
 
 
-def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual):
+def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT_DIR='./Report_data/'):
     '''
     Function for plot_per_base_seq_quality drawing.
     '''
@@ -128,7 +128,7 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual):
     plt.title('Quality scores across all bases', size=8)
     plt.xlabel('Position in read', size=8)
 
-    plt.savefig('Report_data/Per_base_sequence_quality.png')
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_quality.png')
     plt.close()
 
 
@@ -171,7 +171,7 @@ def per_sequence_quality(reads):
     return qual_and_numbers
 
 
-def plot_per_seq_quality_scores(d):
+def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR='./Report_data/'):
     '''
     Function for plot_per_seq_quality_scores drawing.
     '''
@@ -190,7 +190,7 @@ def plot_per_seq_quality_scores(d):
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
-    plt.savefig('Report_data/Per_sequence_quality_scores.png')
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_sequence_quality_scores.png')
     plt.close()
 
 
@@ -261,7 +261,7 @@ def per_base_nucleotides_proportion(reads):
     return [a_proportion, t_proportion, g_proportion, c_proportion]
 
 
-def plot_per_base_seq_content(lst_proportions):
+def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR='./Report_data/'):
     '''
     Function for plot_per_base_seq_content drawing.
     '''
@@ -296,7 +296,7 @@ def plot_per_base_seq_content(lst_proportions):
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
-    plt.savefig('Report_data/Per_base_sequence_content.png')
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_content.png')
     plt.close()
 
 
@@ -304,19 +304,20 @@ def main():
     # Sample input
     input_fastq = './Test_data/amp_res_2_passed.fastq'
     reads = process_file(input_fastq)
+    DEFAULT_OUTPUT_DIR='./Report_data/'
 
     # 1
     qualities_per_base = calculate_quality_per_base(reads)
     dict_mean_qual = calculate_mean_quality_per_base(qualities_per_base)
-    plot_per_base_seq_quality(qualities_per_base, dict_mean_qual)
+    plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT_DIR)
 
     # 2
     d = per_sequence_quality(reads)
-    plot_per_seq_quality_scores(d)
+    plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR)
 
     # 3
     lst_proportions = per_base_nucleotides_proportion(reads)
-    plot_per_base_seq_content(lst_proportions)
+    plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR)
 
 
 if __name__ == '__main__':
