@@ -1,6 +1,4 @@
-from collections import Counter
 import matplotlib.pyplot as plt
-import csv
 from scipy import stats
 import numpy as np
 
@@ -34,23 +32,23 @@ def count_gc_content(line):
 
 
 def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
-    gc_content = [count_gc_content(read[1]) for read in parsed_file]    
+    gc_content = [count_gc_content(read[1]) for read in parsed_file]
     gc_content = np.array(gc_content)
     mean = np.median(gc_content)
     sd = np.std(gc_content)
     xx = np.arange(0, 100, 1)
     y = kde(gc_content, xx)
-    fig, ax = plt.subplots(figsize=(8,6))
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(xx[:-1], y, color='red', label='GC count per read')
 
-    theoretical_y = stats.norm.pdf(xx[:-1], loc = mean, scale = sd) * len(parsed_file)
+    theoretical_y = stats.norm.pdf(xx[:-1], loc=mean, scale=sd) * len(parsed_file)
     ax.plot(xx[:-1], theoretical_y, color='blue', label='Theoretical Distribution')
     plt.xticks(range(0, 100, 10))
     plt.title('GC distribution over all sequences')
     plt.xlabel('Mean GC content (%)')
     ax.legend()
-    plt.grid(alpha = 0.5)
-    fig.patch.set_alpha(1) #make white borders
+    plt.grid(alpha=0.5)
+    fig.patch.set_alpha(1)
     plt.savefig(DEFAULT_OUTPUT_DIR+'gc_content.png')
     plt.close()
 
@@ -66,14 +64,14 @@ def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
 
 def draw_N_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     length_dict = {}
-    
+
     for read in parsed_file:
         length = len(read[1])
         if length in length_dict.keys():
             length_dict[length] += 1
         else:
             length_dict[length] = 1
-            
+
     max_length = max(length_dict.keys())
     N_counter = [0 for i in range(max_length)]
     Read_counter = [0 for i in range(max_length)]
@@ -85,24 +83,24 @@ def draw_N_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
             else:
                 Read_counter[i] += 1
 
-    N_content = [N_counter[i] / Read_counter[i] for i in range(len(N_counter))]    
+    N_content = [N_counter[i] / Read_counter[i] for i in range(len(N_counter))]
     N_content = np.array(N_content)
-    
-    fig, ax = plt.subplots(figsize=(8,6))
+
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(range(len(N_content)), N_content * 100, color='red', label='%N')
     plt.yticks(range(0, 100, 10))
     plt.title('N content across all bases')
     plt.xlabel('Position in read (bp)')
     ax.legend()
-    plt.grid(alpha = 0.5)
-    fig.patch.set_alpha(1) #make white borders
+    plt.grid(alpha=0.5)
+    fig.patch.set_alpha(1)
     plt.savefig(DEFAULT_OUTPUT_DIR+'N_content.png')
     plt.close()
 
-    max_content = np.max(N_content * 100) 
+    max_content = np.max(N_content * 100)
     if max_content > 20:
         return 'Failure'
-    
+
     if max_content > 5:
         return 'Warning'
 
@@ -116,7 +114,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
             reads_count[read[1]] += 1
         else:
             reads_count[read[1]] = 1
-    
+
     counts = [a for a in reads_count.values()]
     total_number = len(parsed_file)
     distinct_number = len(reads_count)
@@ -136,7 +134,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
         y_sum.append(sum(values))
         y_len.append(len(values))
         
-    fig, ax = plt.subplots(figsize=(8,6))
+    fig, ax = plt.subplots(figsize=(8, 6))
     x_values = range(len(lower))
     x_ticks = map(str, lower)
     y_sum = [100 * x / total_number for x in y_sum]
@@ -148,8 +146,8 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     plt.title('Percent of seq remaining if deduplicated ' + str(percent) + '%')
     plt.xlabel('Sequence duplication level')
     plt.legend()
-    plt.grid(alpha = 0.5)
-    fig.patch.set_alpha(1) #make white borders
+    plt.grid(alpha=0.5)
+    fig.patch.set_alpha(1)
     plt.savefig(DEFAULT_OUTPUT_DIR+'deduplication.png')
     plt.close()
 
@@ -161,7 +159,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
 
     if non_unique_seq_frac > 20:
         return 'Warning'
-    
+
     return 'Good'
 
 
