@@ -102,7 +102,7 @@ def adapter_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     colors = {'Illumina Universal Adapter': '#D14139',
               'Illumina Small RNA 3\' Adapter': '#1D2DD8',
               'Illumina Small RNA 5\' Adapter': '#73DF57',
-              'Nextera Transposase Sequence 1': '№6D6D6D',
+              'Nextera Transposase Sequence 1': '#6D6D6D',
               'Nextera Transposase Sequence 2': 'purple',
               'SOLID Small RNA Adapter': '#EC69F8'}
     max_val = 0
@@ -194,8 +194,8 @@ def draw_plot(xs, ys, color, label, xlabel, title, xticks, yticks):
     plt.xticks(xticks)
     plt.yticks(yticks)
 
-    plt.xlabel(xlabel)
-    plt.title(title)
+    plt.xlabel(xlabel, size=8)
+    plt.title(title, size=8)
 
     plt.grid(alpha=0.5)
     plt.legend()
