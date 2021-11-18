@@ -1,14 +1,16 @@
-{% macro status_check(a, b) %}
+{% macro status_image(status) %}
   
-  {% if x == 1%}
-    <img src="./image/xxx.png"/>
+  {% if status == 'failure' %}
+    <img src="./check_img/error.jpg">
   
-  {% elif y == 1 %}
-    {{yyy(x, y)}}
+  {% elif status == 'warning' %}
+    <img src="./check_img/warning.jpg">
   
-  {% else %}
+  {% elif status == 'warning' %}
+    <img src="./check_img/good.jpg">
 
   {% endif %}
+
 {% endmacro %}
 
 
@@ -20,25 +22,68 @@
 
   </head>
   <body>
-    <h1>{{'Hello!'}}</h1>
+    <h1> FASTQC-like Report </h1>
+    <hr>
 
-    <p>
-      Hi! My name is {{name}}!
-    </p>
+    <TABLE>
+      <TR>
+        <TD> Filename </TD>
+        <TD> {{file}} </TD>
+      </TR>
+      <TR>
+        <TD> Encoding </TD>
+        <TD> {{Encoding}} </TD>
+      </TR>
+      <TR>
+        <TD> Total Sequences </TD>
+        <TD> {{total_sequences}} </TD>
+      </TR>
+      <TR>
+        <TD> Sequence Length </TD>
+        <TD> {{sequence_length}} </TD>
+      </TR>
+      <TR>
+        <TD> %GC </TD>
+        <TD> {{GC}} </TD>
+      </TR>
+    </TABLE>
+    <hr>
 
-    {% for caption in captions %}
-      <h2>{{caption}}</h2>
+    <h2> Per Base Sequence Quality </h2>
+    <img src="./Per_base_sequence_quality.png">
+    <hr>
 
-      <p>
-        Some text for {{caption}}.
-      </p>
-    {% endfor %}
+    <h2> Per sequence quality scores </h2>
+    <img src="./Per_sequence_quality_scores.png">
+    <hr>
 
-    {{ status_image(status) }}
+    <h2> Per base sequence content </h2>
+    <img src="./Per_base_sequence_content.png">
+    <hr>
 
+    <h2> {{ status_image(gc_content_result) }} Per sequence GC content </h2>
+    <img src="./gc_content.png">
+    <hr>
 
+    <h2> {{ status_image(N_content_result) }} Per base N content </h2>
+    <img src="./N_content.png">
+    <hr>
 
-    <hr/>
+    <h2> {{ status_image(sequence_length_distribution_result) }} Sequence Length Distribution </h2>
+    <img src="./sequence_length_distribution.png">
+    <hr>
+
+    <h2> {{ status_image(deduplicated_result) }} Sequence Duplication Levels </h2>
+    <img src="./deduplication.png">
+    <hr>
+
+    <h2> {{ status_image(overrepresented_sequences_result) }} Overrepresented sequences </h2>
+
+    <hr>
+
+    <h2> {{ status_image(adapter_content_result) }} Adapter Content </h2>
+    <img src="./adapter_content.png">
+    <hr>
 
     <p>
       Generated at {{now|format_datetime}}.

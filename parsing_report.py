@@ -35,6 +35,7 @@ def prepair_data(input, outdir):
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
     # 4
     parsed_file_for_func = FastQC_functions.process_file(input)
+
     qualities_per_base = FastQC_functions.calculate_quality_per_base(parsed_file_for_func)
     dict_mean_qual = FastQC_functions.calculate_mean_quality_per_base(qualities_per_base)
     FastQC_functions.plot_per_base_seq_quality(qualities_per_base, dict_mean_qual)
@@ -51,11 +52,33 @@ def prepair_data(input, outdir):
     #6
     deduplicated_result = FastQC_G.draw_deduplicated(parsed_file, outdir)
 
+    # Basic statistics
+    Encoding = 'Encoding'
+    total_sequences = len(parsed_file)
+    sequence_length = [len(min(parsed_file_for_func[1])), len(max(parsed_file_for_func[1]))]
+    
+    if sequence_length[0] == sequence_length[1]:
+        seq_length = sequence_length[0]
+    else:
+        seq_length = str(sequence_length[0], '-', sequence_length[1])
+
+
+    GC_percent = 50
+
+    # context for html report
     context = {'now': datetime.datetime.utcnow(),
                'file': input,
                'outdir': outdir,
-               'name': 'Yulia',
-               'captions': ['intro', 'main part', 'results']}
+               'Encoding' : Encoding,
+               'total_sequences': total_sequences,
+               'sequence_length': seq_length,
+               'GC' : GC_percent,
+               'gc_content_result' : gc_content_result,
+               'N_content_result' : N_content_result,
+               'sequence_length_distribution_result': sequence_length_distribution_result,
+               'deduplicated_result' : deduplicated_result,
+               'overrepresented_sequences_result' : overrepresented_sequences_result,
+               'adapter_content_result': adapter_content_result}
 
     return context
 
