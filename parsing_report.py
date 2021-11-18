@@ -1,6 +1,7 @@
 import logging
 import datetime
 from types import new_class
+import os
 
 import typer
 import jinja2
@@ -24,21 +25,25 @@ def prepair_data(input, outdir):
     Save plots to "outdit/Report_data/".
     '''
     parsed_file = fastqc.read_file(input)
-
+    
+    if not os.path.exists(outdir):
+            os.makedirs(outdir)
+    
     # 1-3
     sequence_length_distribution_result = fastqc.sequence_length_distribution(parsed_file, outdir)
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file, outdir)
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
     # 4
-    qualities_per_base = FastQC_functions.calculate_quality_per_base(parsed_file)
+    parsed_file_for_func = FastQC_functions.process_file(input)
+    qualities_per_base = FastQC_functions.calculate_quality_per_base(parsed_file_for_func)
     dict_mean_qual = FastQC_functions.calculate_mean_quality_per_base(qualities_per_base)
-    FastQC_functions.plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, outdir)
+    FastQC_functions.plot_per_base_seq_quality(qualities_per_base, dict_mean_qual)
     # 5
-    d = FastQC_functions.per_sequence_quality(parsed_file)
-    FastQC_functions.plot_per_seq_quality_scores(d, outdir)
+    d = FastQC_functions.per_sequence_quality(parsed_file_for_func)
+    FastQC_functions.plot_per_seq_quality_scores(d)
     # 6
-    lst_proportions = FastQC_functions.per_base_nucleotides_proportion(parsed_file)
-    FastQC_functions.plot_per_base_seq_content(lst_proportions, outdir)
+    lst_proportions = FastQC_functions.per_base_nucleotides_proportion(parsed_file_for_func)
+    FastQC_functions.plot_per_base_seq_content(lst_proportions)
     # 7
     gc_content_result = FastQC_G.draw_gc_content(parsed_file, outdir)
     # 8
@@ -48,6 +53,7 @@ def prepair_data(input, outdir):
 
     context = {'now': datetime.datetime.utcnow(),
                'file': input,
+               'outdir': outdir,
                'name': 'Yulia',
                'captions': ['intro', 'main part', 'results']}
 
@@ -77,7 +83,6 @@ def render_report(context, template, outdir):
     logging.info('report created')
 
 
-    
 DEFAULT_TEMPLATE = './Report_templates/report.html.j2'
 DEFAULT_OUTPUT_DIR = './Report_data/'
 
