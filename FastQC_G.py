@@ -118,7 +118,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     counts = [a for a in reads_count.values()]
     total_number = len(parsed_file)
     distinct_number = len(reads_count)
-    
+
     percent = round(100 * distinct_number / total_number, 2)
 
     lower = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 500, 1000, 5000, 10000]
