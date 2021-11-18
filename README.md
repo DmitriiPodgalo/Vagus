@@ -81,4 +81,4 @@ poetry env use python
 poetry install
 
 # Run
-poetry run parsing_report.py --input "input_file.fastq"
+poetry run python parsing_report.py --input "input_file.fastq"

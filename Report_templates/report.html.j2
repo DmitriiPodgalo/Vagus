@@ -1,3 +1,17 @@
+{% macro status_check(a, b) %}
+  
+  {% if x == 1%}
+    <img src="./image/xxx.png"/>
+  
+  {% elif y == 1 %}
+    {{yyy(x, y)}}
+  
+  {% else %}
+
+  {% endif %}
+{% endmacro %}
+
+
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -6,11 +20,10 @@
 
   </head>
   <body>
-    <h1>Report {{caption}}</h1>
+    <h1>{{'Hello!'}}</h1>
 
     <p>
-      Basic Statistics
-      
+      Hi! My name is {{name}}!
     </p>
 
     {% for caption in captions %}
@@ -20,6 +33,10 @@
         Some text for {{caption}}.
       </p>
     {% endfor %}
+
+    {{ status_image(status) }}
+
+
 
     <hr/>
 
