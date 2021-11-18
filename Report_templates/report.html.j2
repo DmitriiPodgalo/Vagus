@@ -1,14 +1,20 @@
 {% macro status_image(status) %}
   
-  {% if status == 'failure' %}
-    <img src="./check_img/error.jpg">
+  {% if status == 'failure' or status == 'Failure' %}
+    <small style="color: red; display: inline-block; vertical-align: text-top;"><strong>[Failure]</strong></small>
+    &nbsp;
   
-  {% elif status == 'warning' %}
-    <img src="./check_img/warning.jpg">
+  {% elif status == 'warning' or status == 'Warning' %}
+    <small style="color: orange; display: inline-block; vertical-align: text-top;"><strong>[Warning]</strong></small>
+    &nbsp;
   
-  {% elif status == 'warning' %}
-    <img src="./check_img/good.jpg">
+  {% elif status == 'good' or status == 'Good' %}
+    <small style="color: green; display: inline-block; vertical-align: text-top;"><strong>[Good]</strong></small>
+    &nbsp;
 
+  {% else %}
+  {{raise_error("unexpected status value: {}".format(status))}}
+  
   {% endif %}
 
 {% endmacro %}
@@ -25,7 +31,12 @@
     <h1> FASTQC-like Report </h1>
     <hr>
 
-    <TABLE>
+    <p>
+      Generated at {{now|format_datetime}}.
+    </p>
+    
+    <table style="width: 100%;">
+    <tbody>
       <TR>
         <TD> Filename </TD>
         <TD> {{file}} </TD>
@@ -46,7 +57,8 @@
         <TD> %GC </TD>
         <TD> {{GC}} </TD>
       </TR>
-    </TABLE>
+    </tbody>
+    </table>
     <hr>
 
     <h2> Per Base Sequence Quality </h2>
@@ -85,8 +97,5 @@
     <img src="./adapter_content.png">
     <hr>
 
-    <p>
-      Generated at {{now|format_datetime}}.
-    </p>
   </body>
 </html>

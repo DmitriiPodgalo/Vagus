@@ -19,6 +19,10 @@ def format_datetime(context, value):
     return value.strftime('%d/%m/%y  %H:%M:%S')
 
 
+def raise_error(text):
+    raise Exception(text)
+
+
 def prepair_data(input, outdir):
     '''
     Parsed file and create quality checks and plots.
@@ -62,7 +66,6 @@ def prepair_data(input, outdir):
     else:
         seq_length = str(sequence_length[0], '-', sequence_length[1])
 
-
     GC_percent = 50
 
     # context for html report
@@ -94,7 +97,7 @@ def render_report(context, template, outdir):
                                      extensions=['jinja2.ext.loopcontrols'])
 
     environment.filters |= {'format_datetime': format_datetime}
-    environment.globals |= {}
+    environment.globals |= {"raise_error": raise_error}
 
     loaded_template = environment.get_template(template)
 
