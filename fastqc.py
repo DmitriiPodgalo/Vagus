@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import csv
 
 
-def sequence_length_distribution(parsed_file):
+def sequence_length_distribution(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     lines_reads = [i[1] for i in parsed_file]
     seq_dict = Counter(sorted(map(len, lines_reads)))
     counter = 1
@@ -38,7 +38,7 @@ def sequence_length_distribution(parsed_file):
 
     # сохраняем картинку и возвращаем check
 
-    plt.savefig('sequence_length_distribution.png', bbox_inches='tight')
+    plt.savefig(DEFAULT_OUTPUT_DIR+'sequence_length_distribution.png', bbox_inches='tight')
     plt.close()
 
     if seq_dict[0] != 0:
@@ -49,7 +49,7 @@ def sequence_length_distribution(parsed_file):
         return 'good'
 
 
-def overrepresented_sequences(parsed_file):
+def overrepresented_sequences(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     lines_reads = [i[1] for i in parsed_file]
     number_reads = len(lines_reads)
     counter = 0
@@ -72,7 +72,7 @@ def overrepresented_sequences(parsed_file):
 
     # сохраняем таблицу и возвращаем check
 
-    with open('or_seq.csv', 'w') as f:
+    with open(DEFAULT_OUTPUT_DIR+'or_seq.csv', 'w') as f:
         writer = csv.writer(f)
         for read in d:
             writer.writerow(read)
@@ -83,7 +83,7 @@ def overrepresented_sequences(parsed_file):
         return 'warning'
 
 
-def adapter_content(parsed_file):
+def adapter_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     lines_reads = [i[1] for i in parsed_file]
     adapters = {'Illumina Universal Adapter': 'AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT',
                 'Illumina Small RNA 3\' Adapter': 'TGGAATTCTCGGGTGCCAAGG',
@@ -157,7 +157,7 @@ def adapter_content(parsed_file):
 
     # сохраняем картинку и возвращаем check
 
-    plt.savefig('adapter_content.png', bbox_inches='tight')
+    plt.savefig(DEFAULT_OUTPUT_DIR+'adapter_content.png', bbox_inches='tight')
     plt.close()
 
     if thre > 0.1:
