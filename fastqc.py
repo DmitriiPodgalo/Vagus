@@ -38,7 +38,8 @@ def sequence_length_distribution(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/
 
     # сохраняем картинку и возвращаем check
 
-    plt.savefig(DEFAULT_OUTPUT_DIR+'sequence_length_distribution.png', bbox_inches='tight')
+    plt.gcf().set_size_inches(8, 6)
+    plt.savefig(DEFAULT_OUTPUT_DIR+'sequence_length_distribution.png', dpi=100, bbox_inches='tight')
     plt.close()
 
     if seq_dict[0] != 0:
@@ -157,7 +158,8 @@ def adapter_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
 
     # сохраняем картинку и возвращаем check
 
-    plt.savefig(DEFAULT_OUTPUT_DIR+'adapter_content.png', bbox_inches='tight')
+    plt.gcf().set_size_inches(8, 6)
+    plt.savefig(DEFAULT_OUTPUT_DIR+'adapter_content.png', dpi=100, bbox_inches='tight')
     plt.close()
 
     if thre > 0.1:
