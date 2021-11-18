@@ -120,20 +120,20 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     distinct_number = len(reads_count)
     
     percent = round(100 * distinct_number / total_number, 2)
-    
+
     lower = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 500, 1000, 5000, 10000]
     upper = lower[1:] + [1e10]
-    
+
     y_sum = []
     y_len = []
-    
+
     for i in range(len(lower)):
         low = lower[i]
         hight = upper[i]
         values = [a for a in counts if low <= a < hight]
         y_sum.append(sum(values))
         y_len.append(len(values))
-        
+
     fig, ax = plt.subplots(figsize=(8, 6))
     x_values = range(len(lower))
     x_ticks = map(str, lower)
