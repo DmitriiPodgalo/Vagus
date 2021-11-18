@@ -127,8 +127,8 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT
     plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2), size=7)
     plt.title('Quality scores across all bases', size=8)
     plt.xlabel('Position in read', size=8)
-
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_quality.png')
+    plt.gcf().set_size_inches(8, 6)
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_quality.png', dpi=100)
     plt.close()
 
 
@@ -190,7 +190,8 @@ def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR='./Report_data/'):
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_sequence_quality_scores.png')
+    plt.gcf().set_size_inches(8, 6)
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_sequence_quality_scores.png', dpi=100)
     plt.close()
 
 
@@ -296,7 +297,8 @@ def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR='./Report_data
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_content.png')
+    plt.gcf().set_size_inches(8, 6)
+    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_content.png', dpi=100)
     plt.close()
 
 
