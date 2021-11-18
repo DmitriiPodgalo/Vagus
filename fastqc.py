@@ -194,8 +194,8 @@ def draw_plot(xs, ys, color, label, xlabel, title, xticks, yticks):
     plt.xticks(xticks)
     plt.yticks(yticks)
 
-    plt.xlabel(xlabel, size=8)
-    plt.title(title, size=8)
+    plt.xlabel(xlabel)
+    plt.title(title)
 
     plt.grid(alpha=0.5)
     plt.legend()
