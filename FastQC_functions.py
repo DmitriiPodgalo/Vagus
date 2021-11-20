@@ -99,11 +99,8 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT
     '''
     # We turn 'qualities_per_base' dictionary into pandas data frsme
     base = pd.DataFrame.from_dict(qualities_per_base)
-    # Set suitable size:
-    plt.figure(figsize=(15, 10))
 
     # Set default theme and remove margins:
-    sns.set_theme()
     plt.margins(0)
 
     # Create colored background:
@@ -123,8 +120,8 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT
     plt.plot(x2, y2, color="#1D2DD8", linewidth=0.5)
 
     # Some improvements to make the plot easier to read:
-    plt.yticks(np.arange(0, 42, step=2))
-    plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2))
+    plt.yticks(np.arange(0, 42, step=2), size=8)
+    plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2), size=7)
     plt.title('Quality scores across all bases')
     plt.xlabel('Position in read')
     plt.gcf().set_size_inches(8, 6)
@@ -178,15 +175,14 @@ def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR = './Report_data/'):
     # We process dictionary in order to set x and y for the plot:
     lists = sorted(d.items())  # sorted by key, return a list of tuples
     x, y = zip(*lists)  # unpack a list of pairs into two tuples
-    # Set suitable size:
-    plt.figure(figsize=(15, 10))
+
     # And also draw the plot:
     plt.plot(x, y, color="#D14139", label='Average quality per read')
     # Some improvements to make the plot easier to read:
     plt.xlabel('Mean Sequence Quality (Pherd Score)')
     plt.title('Quality score distributions over all sequences')
-    plt.xticks(np.arange(0, 40, step=2))
-    plt.yticks(np.arange(0, max(d.values())+10000, step=10000))
+    plt.xticks(np.arange(0, 40, step=2), size=8)
+    plt.yticks(np.arange(0, max(d.values())+10000, step=10000), size=8)
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
@@ -280,9 +276,6 @@ def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR = './Report_da
     # The x is the same for each nucleotides, it is the number of base in the read (dict keys):
     x = list(a_proportion.keys())
 
-    # Set the size
-    plt.figure(figsize=(18, 10))
-
     # And draw the plot for each nucleotide:
     plt.plot(x, ay, color="#D14139", linewidth=0.5, label='%A')
     plt.plot(x, ty, color="#1D2DD8", linewidth=0.5, label='%T')
@@ -290,13 +283,12 @@ def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR = './Report_da
     plt.plot(x, cy, color="black", linewidth=0.5, label='%C')
 
     # Some improvements to make the plot easier to read:
-    plt.xticks(np.arange(0, len(x)+2, step=2))
-    plt.yticks(np.arange(0, 110, step=10))
+    plt.xticks(np.arange(0, len(x)+2, step=2), size=7)
+    plt.yticks(np.arange(0, 110, step=10), size=8)
     plt.xlabel('Position in read(bp)')
     plt.title('Sequence content across all bases')
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
-
     plt.gcf().set_size_inches(8, 6)
     plt.savefig(DEFAULT_OUTPUT_DIR + 'Per_base_sequence_content.png', dpi=100, bbox_inches='tight')
     plt.close()
