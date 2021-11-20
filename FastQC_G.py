@@ -23,25 +23,29 @@ def kde(x, steps):
     return np.array([np.sum((x >= steps[i]) & (x <= steps[i + 1])) for i in range(len(steps) - 1)])
 
 
+def count_gc(line):
+    line_lenght = len(line)
+    GC_count = line.upper().count('G') + line.upper().count('C')
+    return GC_count, line_lenght
+
+
 def count_gc_content(line):
-    length = len(line)
-    G_count = line.upper().count('G')
-    C_count = line.upper().count('C')
-    percent = ((G_count + C_count) / length) * 100
+    GC_count, length = count_gc(line)
+    percent = (GC_count / length) * 100
     return percent
 
 
 def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     gc_content = [count_gc_content(read[1]) for read in parsed_file]    
     gc_content = np.array(gc_content)
-    mean = np.median(gc_content)
+    median = np.median(gc_content)
     sd = np.std(gc_content)
     xx = np.arange(0, 100, 1)
     y = kde(gc_content, xx)
     fig, ax = plt.subplots(figsize=(8,6))
     ax.plot(xx[:-1], y, color='red', label='GC count per read')
 
-    theoretical_y = stats.norm.pdf(xx[:-1], loc = mean, scale = sd) * len(parsed_file)
+    theoretical_y = stats.norm.pdf(xx[:-1], loc = median, scale = sd) * len(parsed_file)
     ax.plot(xx[:-1], theoretical_y, color='blue', label='Theoretical Distribution')
     plt.xticks(range(0, 100, 10))
     plt.title('GC distribution over all sequences')
@@ -135,8 +139,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
         values = [a for a in counts if low <= a < hight]
         y_sum.append(sum(values))
         y_len.append(len(values))
-        
-    fig, ax = plt.subplots(figsize=(8,6))
+
     x_values = range(len(lower))
     x_ticks = map(str, lower)
     y_sum = [100 * x / total_number for x in y_sum]
