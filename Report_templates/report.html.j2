@@ -1,16 +1,22 @@
-{% macro status_image(status) %}
+{% macro header_text(img_path, color, content) %}
+
+  <img src="./check_img/{{img_path}}" style="display: inline-block; margin: 0;" height="32px" width="32px"> 
+  <span style="color:{{color}};"> {{content}} </span>
+
+{% endmacro %}
+
+
+
+{% macro status_header(status, content) %}
   
   {% if status == 'failure' or status == 'Failure' %}
-    <small style="color: red; display: inline-block; vertical-align: text-top;"><strong>[Failure]</strong></small>
-    &nbsp;
+    {{header_text('error.jpg', 'red', content)}}
   
   {% elif status == 'warning' or status == 'Warning' %}
-    <small style="color: orange; display: inline-block; vertical-align: text-top;"><strong>[Warning]</strong></small>
-    &nbsp;
+    {{header_text('warning.jpg', 'orange', content)}}
   
   {% elif status == 'good' or status == 'Good' %}
-    <small style="color: green; display: inline-block; vertical-align: text-top;"><strong>[Good]</strong></small>
-    &nbsp;
+    {{header_text('good.jpg', 'green', content)}}
 
   {% else %}
   {{raise_error("unexpected status value: {}".format(status))}}
@@ -19,7 +25,6 @@
 
 {% endmacro %}
 
-
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -27,6 +32,28 @@
     <link rel="stylesheet" href="http://matejlatin.github.io/Gutenberg/example2/assets/combined.min.css">
 
   </head>
+  
+  <style>
+    .floating-menu {
+                    font-family: sans-serif;
+                    background: whitesmoke;
+                    padding: 5px;;
+                    width: 230px;
+                    z-index: 100;
+                    position: fixed;
+                    bottom: 0px;
+                    right: 0px;
+                    }
+
+    .floating-menu a, 
+    .floating-menu h3 {
+                       font-size: 0.6em;
+                       display: block;
+                       margin: auto;
+                       color: black;
+                       }
+  </style>
+
   <body>
     <h1> FASTQC-like Report </h1>
     <p>
@@ -35,10 +62,18 @@
     
     <hr>
 
-    <ol>
-      <li><a href="#part_1">Part 1</a></li>
-      <li><a href="#part_2">Psrt 2</a></li>
-    </ol>
+  <nav class="floating-menu">
+    <h3>Menu</h3>
+    <a href="#part_1"> Per base sequence quality </a>
+    <a href="#part_2"> Per sequence quality scores </a>
+    <a href="#part_3"> Per base sequence content </a>
+    <a href="#part_4"> Per sequence GC content </a>
+    <a href="#part_5"> Per base N content </a>
+    <a href="#part_6"> Sequence length distribution </a>
+    <a href="#part_7"> Sequence duplication levels </a>
+    <a href="#part_8"> Overrepresented sequences </a>
+    <a href="#part_9"> Adapter content </a>
+  </nav>
 
 
     <table style="width: 100%;">
@@ -67,39 +102,39 @@
     </table>
     <hr>
 
-    <h2><a id="part_1"> Per Base Sequence Quality </a></h2>
+    <h2><a id="part_1"> Per base sequence quality </a></h2>
     <img src="./Per_base_sequence_quality.png">
     <hr>
 
-    <h2> Per sequence quality scores </h2>
+    <h2><a id="part_2"> Per sequence quality scores </a></h2>
     <img src="./Per_sequence_quality_scores.png">
     <hr>
 
-    <h2> Per base sequence content </h2>
+    <h2><a id="part_3"> Per base sequence content </a></h2>
     <img src="./Per_base_sequence_content.png">
     <hr>
 
-    <h2> {{ status_image(gc_content_result) }} Per sequence GC content </h2>
+    <h2><a id="part_4"> {{ status_header(gc_content_result, 'Per sequence GC content') }} </a></h2>
     <img src="./gc_content.png">
     <hr>
 
-    <h2> {{ status_image(N_content_result) }} Per base N content </h2>
+    <h2><a id="part_5"> {{ status_header(N_content_result, 'Per base N content') }} </a></h2>
     <img src="./N_content.png">
     <hr>
 
-    <h2> {{ status_image(sequence_length_distribution_result) }} Sequence Length Distribution </h2>
+    <h2><a id="part_6"> {{ status_header(sequence_length_distribution_result, 'Sequence length distribution') }}  </a></h2>
     <img src="./sequence_length_distribution.png">
     <hr>
 
-    <h2> {{ status_image(deduplicated_result) }} Sequence Duplication Levels </h2>
+    <h2><a id="part_7"> {{ status_header(deduplicated_result,  'Sequence duplication levels') }} </a></h2>
     <img src="./deduplication.png">
     <hr>
 
-    <h2> {{ status_image(overrepresented_sequences_result) }} Overrepresented sequences </h2>
+    <h2><a id="part_8"> {{ status_header(overrepresented_sequences_result, 'Overrepresented sequences') }}  </a></h2>
 
     <hr>
 
-    <h2> {{ status_image(adapter_content_result) }} Adapter Content </h2>
+    <h2><a id="part_9"> {{ status_header(adapter_content_result, 'Adapter content') }}  </a></h2>
     <img src="./adapter_content.png">
     <hr>
 
