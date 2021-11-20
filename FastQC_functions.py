@@ -81,7 +81,7 @@ def calculate_quality_per_base(reads):
 def calculate_mean_quality_per_base(qualities_per_base):
     '''
     Function that calculates average quality per base.
-    '''    
+    '''
     dict_mean_qual = dict()    # The new empty dictionary is created
 
     # We use 'quality_per_base' dictionary. It is a result of previous function,
@@ -93,7 +93,7 @@ def calculate_mean_quality_per_base(qualities_per_base):
     return dict_mean_qual
 
 
-def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT_DIR='./Report_data/'):
+def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT_DIR = './Report_data/'):
     '''
     Function for plot_per_base_seq_quality drawing.
     '''
@@ -107,28 +107,28 @@ def plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, DEFAULT_OUTPUT
     plt.margins(0)
 
     # Create colored background:
-    plt.axhspan(0, 20, facecolor='red', alpha=0.1)
+    plt.axhspan(0, 20, facecolor='#D14139', alpha=0.1)
     plt.axhspan(20, 28, facecolor='yellow', alpha=0.1)
     plt.axhspan(28, 42, facecolor='green', alpha=0.1)
 
     # And, finally, draw boxplot
     sns.boxplot(data=base, color="yellow", whis=[10, 90], showfliers=False,
-                medianprops=dict(linewidth=0.5, color='red'))
+                medianprops=dict(linewidth=0.5, color='#D14139'))
 
     # We process dictionary in order to set x and y for the plot:
     lists = sorted(dict_mean_qual.items())  # sorted by key, return a list of tuples
     x2, y2 = zip(*lists)  # unpack a list of pairs into two tuples
 
     # And also draw the mean plot:
-    plt.plot(x2, y2, color="blue", linewidth=0.5)
+    plt.plot(x2, y2, color="#1D2DD8", linewidth=0.5)
 
     # Some improvements to make the plot easier to read:
-    plt.yticks(np.arange(0, 42, step=2), size=8)
-    plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2), size=7)
-    plt.title('Quality scores across all bases', size=8)
-    plt.xlabel('Position in read', size=8)
+    plt.yticks(np.arange(0, 42, step=2))
+    plt.xticks(np.arange(0, len(qualities_per_base)+2, step=2))
+    plt.title('Quality scores across all bases')
+    plt.xlabel('Position in read')
     plt.gcf().set_size_inches(8, 6)
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_quality.png', dpi=100)
+    plt.savefig(DEFAULT_OUTPUT_DIR + 'Per_base_sequence_quality.png', dpi=100, bbox_inches='tight')
     plt.close()
 
 
@@ -167,11 +167,11 @@ def per_sequence_quality(reads):
         else:
             # If it is not, we set 1 its value
             qual_and_numbers[n] = 1
-    
+
     return qual_and_numbers
 
 
-def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR='./Report_data/'):
+def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR = './Report_data/'):
     '''
     Function for plot_per_seq_quality_scores drawing.
     '''
@@ -181,17 +181,17 @@ def plot_per_seq_quality_scores(d, DEFAULT_OUTPUT_DIR='./Report_data/'):
     # Set suitable size:
     plt.figure(figsize=(15, 10))
     # And also draw the plot:
-    plt.plot(x, y, color="red", label='Average quality per read')
+    plt.plot(x, y, color="#D14139", label='Average quality per read')
     # Some improvements to make the plot easier to read:
-    plt.xlabel('Mean Sequence Quality (Pherd Score)', size=8)
-    plt.title('Quality score distributions over all sequences', size=8)
-    plt.xticks(np.arange(0, 40, step=2), size=8)
-    plt.yticks(np.arange(0, max(d.values())+10000, step=10000), size=8)
+    plt.xlabel('Mean Sequence Quality (Pherd Score)')
+    plt.title('Quality score distributions over all sequences')
+    plt.xticks(np.arange(0, 40, step=2))
+    plt.yticks(np.arange(0, max(d.values())+10000, step=10000))
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
     plt.gcf().set_size_inches(8, 6)
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_sequence_quality_scores.png', dpi=100)
+    plt.savefig(DEFAULT_OUTPUT_DIR + 'Per_sequence_quality_scores.png', dpi=100, bbox_inches='tight')
     plt.close()
 
 
@@ -262,7 +262,7 @@ def per_base_nucleotides_proportion(reads):
     return [a_proportion, t_proportion, g_proportion, c_proportion]
 
 
-def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR='./Report_data/'):
+def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR = './Report_data/'):
     '''
     Function for plot_per_base_seq_content drawing.
     '''
@@ -284,21 +284,21 @@ def plot_per_base_seq_content(lst_proportions, DEFAULT_OUTPUT_DIR='./Report_data
     plt.figure(figsize=(18, 10))
 
     # And draw the plot for each nucleotide:
-    plt.plot(x, ay, color="red", linewidth=0.5, label='%A')
-    plt.plot(x, ty, color="blue", linewidth=0.5, label='%T')
+    plt.plot(x, ay, color="#D14139", linewidth=0.5, label='%A')
+    plt.plot(x, ty, color="#1D2DD8", linewidth=0.5, label='%T')
     plt.plot(x, gy, color="green", linewidth=0.5, label='%G')
     plt.plot(x, cy, color="black", linewidth=0.5, label='%C')
 
     # Some improvements to make the plot easier to read:
-    plt.xticks(np.arange(0, len(x)+2, step=2), size=7)
-    plt.yticks(np.arange(0, 110, step=10), size=8)
-    plt.xlabel('Position in read(bp)', size=8)
-    plt.title('Sequence content across all bases', size=8)
+    plt.xticks(np.arange(0, len(x)+2, step=2))
+    plt.yticks(np.arange(0, 110, step=10))
+    plt.xlabel('Position in read(bp)')
+    plt.title('Sequence content across all bases')
     plt.legend(loc='upper right')
     plt.grid(alpha=0.5)
 
     plt.gcf().set_size_inches(8, 6)
-    plt.savefig(DEFAULT_OUTPUT_DIR+'Per_base_sequence_content.png', dpi=100)
+    plt.savefig(DEFAULT_OUTPUT_DIR + 'Per_base_sequence_content.png', dpi=100, bbox_inches='tight')
     plt.close()
 
 
@@ -306,7 +306,7 @@ def main():
     # Sample input
     input_fastq = './Test_data/amp_res_2_passed.fastq'
     reads = process_file(input_fastq)
-    DEFAULT_OUTPUT_DIR='./Report_data/'
+    DEFAULT_OUTPUT_DIR = './Report_data/'
 
     # 1
     qualities_per_base = calculate_quality_per_base(reads)
