@@ -9,6 +9,7 @@ import jinja2
 import fastqc
 import FastQC_functions
 import FastQC_G
+import FastQC_B
 
 
 app = typer.Typer()
@@ -57,16 +58,15 @@ def prepair_data(input, outdir):
     deduplicated_result = FastQC_G.draw_deduplicated(parsed_file, outdir)
 
     # Basic statistics
-    Encoding = 'Encoding'
+    Encoding = FastQC_B.encoding_detector(parsed_file)
     total_sequences = len(parsed_file)
     sequence_length = [len(min(parsed_file_for_func[1])), len(max(parsed_file_for_func[1]))]
+    mean_GC = FastQC_B.count_all_GC(parsed_file)
     
     if sequence_length[0] == sequence_length[1]:
         seq_length = sequence_length[0]
     else:
         seq_length = str(sequence_length[0], '-', sequence_length[1])
-
-    GC_percent = 50
 
     # context for html report
     context = {'now': datetime.datetime.utcnow(),
@@ -75,7 +75,7 @@ def prepair_data(input, outdir):
                'Encoding' : Encoding,
                'total_sequences': total_sequences,
                'sequence_length': seq_length,
-               'GC' : GC_percent,
+               'GC' : mean_GC,
                'gc_content_result' : gc_content_result,
                'N_content_result' : N_content_result,
                'sequence_length_distribution_result': sequence_length_distribution_result,
