@@ -1,5 +1,6 @@
 import FastQC_G
 
+
 def sequence_length(parsed_file):
     '''
     Return min and max read length
@@ -24,7 +25,7 @@ def count_all_GC(parsed_file):
 
 def encoding_detector(parsed_file):
     '''
-    We calculate the minimum and maximum ASCII quality in all reads. 
+    We calculate the minimum and maximum ASCII quality in all reads.
     Based on this, we choose the encoding.
     '''
     min_quality, max_qulity = 0, 0
