@@ -157,7 +157,6 @@ def check_outdir(outdir, now_time):
     If in not the '/' - added it to path.
     '''
     pattern_end = re.compile(r".*/$")
-    pattern_start = re.compile(r"\./.*/$")
 
     if pattern_end.match(outdir):
         outdir = outdir[:-1]

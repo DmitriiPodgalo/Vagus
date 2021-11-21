@@ -10,8 +10,15 @@ In addition to the required .fastq file, a directory path for saving analysis re
 As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
 
 The Vagus report contains the following data:
-1. ...
-2. ...
+1. Per base sequence quality - 
+2. Per sequence quality scores
+3. Per base sequence content
+4. Per sequence GC content
+5. Per base N content
+6. Sequence length distribution
+7. Sequence duplication levels
+8. Overrepresented sequences
+9. Adapter content
 
 You can test the Vagus with examples .fastq file in `./Test_data` directory. 
 
@@ -156,7 +163,7 @@ poetry run python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_
 ```
 
 # Authors 
-1. Y. Burankova:
+1. [Y. Burankova](https://github.com/Freddsle):
     - README;
     - console input parser via typer;
     - html report creation functions;
@@ -164,17 +171,17 @@ poetry run python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_
     - requiremets and .toml files;
     - correction of the plot design.
     - tested Vagus on Ubuntu 20.04 LTS, Python 3.9.5. and Windows 10 Pro 64x 20H2, Python 3.9.4.
-2. A. Gorbonos:
+2. [A. Gorbonos](https://github.com/IlonaGA):
     - draw_gc_content function checker and plot;
     - draw_N_content function checker and plot;
     - draw_deduplicated function checker and plot;
     - tested on MacOS Big Sur v.11.2.3, Python 3.9.8;
-3. A. Tokareva:
+3. [A. Tokareva](https://github.com/staceyso):
     - plot_per_base_seq_quality function checker and plot;
     - plot_per_seq_quality_scores function checker and plot;
     - plot_per_base_seq_content checker and plot;
     - tested Vagus on WSL2, Ubuntu 20.04 LTS, Python 3.9.5.
-3. D. Podgalo ():
+3. [D. Podgalo](https://github.com/DmitriiPodgalo):
     - tool naming;
     - fastq file pasing function;
     - sequence_length_distribution function checker and plot;
