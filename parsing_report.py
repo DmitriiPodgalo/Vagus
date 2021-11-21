@@ -49,35 +49,47 @@ def prepare_outdir(outdir):
 def prepair_data(input, outdir):
     '''
     Parsed file and create quality checks and plots.
-    Save plots to "outdit/Report_data/".
+    Save plots to "outdir_DATE_TIME/".
+    Print log to console.
     '''
     parsed_file = fastqc.read_file(input)
     prepare_outdir(outdir)
+    logging.info('outdir generated')
     
     # 1
     sequence_length_distribution_result = fastqc.sequence_length_distribution(parsed_file, outdir)
+    logging.info('sequence length distribution result generated')
     # 2
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file, outdir)
+    logging.info('sequence length distribution result generated')
     # 3
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
+    logging.info('adapter content result generated')
     # 4
     per_base_seq_quality_result = FastQC_functions.plot_per_base_seq_quality(parsed_file, outdir)
+    logging.info('per base sequence quality result generated')
     # 5
     per_seq_quality_scores_result = FastQC_functions.plot_per_seq_quality_scores(parsed_file, outdir)
+    logging.info('per sequence quality scores result generated')
     # 6
     per_base_seq_content_result = FastQC_functions.plot_per_base_seq_content(parsed_file, outdir)
+    logging.info('per base sequence content result generated')
     # 7
     gc_content_result = FastQC_G.draw_gc_content(parsed_file, outdir)
+    logging.info('GC content result generated')
     # 8
     N_content_result = FastQC_G.draw_N_content(parsed_file, outdir)
+    logging.info('N content result generated')
     # 9
     deduplicated_result = FastQC_G.draw_deduplicated(parsed_file, outdir)
+    logging.info('deduplicated generated')
 
     # Basic statistics
     Encoding = FastQC_B.encoding_detector(parsed_file)
     total_sequences = len(parsed_file)
     sequence_length = FastQC_B.sequence_length(parsed_file)
     mean_GC = FastQC_B.count_all_GC(parsed_file)
+    logging.info('basic statusctics generated')
 
     if os.path.exists(outdir+'or_seq.csv'):
         overrepresented_sequences_table = pd.read_csv(outdir+'or_seq.csv',
@@ -184,13 +196,12 @@ def generate(input: Path = typer.Option(...,
     logging.basicConfig(level=getattr(logging, log_level.upper()))
 
     outdir = check_outdir(outdir, now_time)
-
     context = prepair_data(input, outdir)
-    render_report(context, template, outdir)
 
-    logging.basicConfig(level=getattr(logging, log_level.upper()))
-    logging.info('generate report')
     logging.info('report template: %s', template)
+    logging.info('generate report')
+    render_report(context, template, outdir)
+    logging.info('report created')
 
 
 def main():
