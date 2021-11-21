@@ -41,6 +41,9 @@ cd Vagus/
 
 # Create and activate your virtual environment
 
+# Install venv
+sudo apt install python3-venv
+
 # create virtual environment (with python 3.9 or 3.10)
 python3 -m venv ./venv
 
@@ -58,7 +61,10 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python3 parsing_report.py --help
-python3 parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
+python3 parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_dir/
+
+# Exit fron venv:
+deactivate
 ```
 
 ## Install and run with poetry (Ubuntu)
@@ -84,7 +90,7 @@ poetry install
 
 # Run file (with python 3.9 or 3.10)
 poetry run python parsing_report.py --help
-poetry run python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
+poetry run python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_dir/
 ```
 
 ## Install and run with pip (Windows)
@@ -117,7 +123,10 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python parsing_report.py --help
-python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
+python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_dir/
+
+# Exit fron venv:
+deactivate
 ```
 
 ## Install and run with poetry (Windows)
@@ -143,10 +152,40 @@ poetry install
 
 # Run
 poetry run python parsing_report.py --help
-poetry run python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
+poetry run python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_dir/
 ```
 
+# Authors 
+1. Y. Burankova:
+    - README;
+    - console input parser via typer;
+    - html report creation functions;
+    - logging;
+    - requiremets and .toml files;
+    - correction of the plot design.
+    - tested Vagus on Ubuntu 20.04 LTS, Python 3.9.5. and Windows 10 Pro 64x 20H2, Python 3.9.4.
+2. A. Gorbonos:
+    - draw_gc_content function checker and plot;
+    - draw_N_content function checker and plot;
+    - draw_deduplicated function checker and plot;
+    - tested on MacOS Big Sur v.11.2.3, Python 3.9.8;
+3. A. Tokareva:
+    - plot_per_base_seq_quality function checker and plot;
+    - plot_per_seq_quality_scores function checker and plot;
+    - plot_per_base_seq_content checker and plot;
+    - tested Vagus on WSL2, Ubuntu 20.04 LTS, Python 3.9.5.
+3. D. Podgalo ():
+    - tool naming;
+    - fastq file pasing function;
+    - sequence_length_distribution function checker and plot;
+    - overrepresented_sequences function checker and plot;
+    - adapter_content function checker and plot;
+    - correction of the plot design.
+    - tested Vagus on MacOS v11.6(20G165), Python 3.9.7.
+
 # Tested on
-Ubuntu 20.04 LTS, Python 3.9.5.
-Windows 10 Pro 64x 20H2, Python 3.9.4.
-MacOS v11.6(20G165), Python 3.9.7.
+Ubuntu 20.04 LTS, Python 3.9.5.\
+Windows 10 Pro 64x 20H2, Python 3.9.4.\
+MacOS v11.6(20G165), Python 3.9.7.\
+MacOS Big Sur v.11.2.3, Python 3.9.8.\
+WSL2, Ubuntu 20.04 LTS, Python 3.9.5.
