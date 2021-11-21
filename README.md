@@ -41,7 +41,7 @@ In addition to the required .fastq file, a directory path for saving analysis re
 
 As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
 
-You can test the Vagus with example .fastq file in `./Test_data` directory. 
+You can test the Vagus with example .fastq file in `./Test_data` directory. The Example report placed in `./Example_report`.
 
 See below for a description of how to install using pip or poetry and how to get started.
 
