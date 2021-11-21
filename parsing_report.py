@@ -168,7 +168,7 @@ def check_outdir(outdir, now_time):
 
 now_time = directory_datetime()
 DEFAULT_TEMPLATE = './Report_templates/report.html.j2'
-DEFAULT_OUTPUT_DIR = './Report_data' + now_time
+DEFAULT_OUTPUT_DIR = 'Report_data'
 
 
 @app.command()
@@ -195,7 +195,7 @@ def generate(input: Path = typer.Option(...,
     logging.info('report template: %s', template)
     logging.info('generate report')
     render_report(context, template, outdir)
-    logging.info('report created')
+    logging.info('report created in %s', outdir)
 
 
 def main():
