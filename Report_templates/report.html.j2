@@ -84,9 +84,9 @@
   <nav class="floating-menu">
     <h3>Menu</h3>
     
-    <a href="#part_1"> Per base sequence quality </a>
-    <a href="#part_2"> Per sequence quality scores </a>
-    <a href="#part_3"> Per base sequence content </a>
+    <a href="#part_1"> {{ status_header(per_base_seq_quality_result, 'Per base sequence quality', 'Menu') }} </a>
+    <a href="#part_2"> {{ status_header(per_seq_quality_scores_result, 'Per sequence quality scores', 'Menu') }} </a>
+    <a href="#part_3"> {{ status_header(per_base_seq_content_result, 'Per base sequence content', 'Menu') }} </a>
     <a href="#part_4"> {{ status_header(gc_content_result, 'Per sequence GC content', 'Menu') }}  </a>
     <a href="#part_5"> {{ status_header(N_content_result, 'Per base N content', 'Menu') }} </a>
     <a href="#part_6"> {{ status_header(sequence_length_distribution_result, 'Sequence length distribution', 'Menu') }} </a>
@@ -126,11 +126,11 @@
     <img src="./Per_base_sequence_quality.png">
     <hr>    
 
-    <h2><a id="part_2"> {{ status_header(plot_per_seq_quality_scores_result, 'Per sequence quality scores', 'Header') }} </a></h2>
+    <h2><a id="part_2"> {{ status_header(per_seq_quality_scores_result, 'Per sequence quality scores', 'Header') }} </a></h2>
     <img src="./Per_sequence_quality_scores.png">
     <hr>    
 
-    <h2><a id="part_3"> {{ status_header(plot_per_base_seq_content_result, 'Per base sequence content', 'Header') }} </a></h2>
+    <h2><a id="part_3"> {{ status_header(per_base_seq_content_result, 'Per base sequence content', 'Header') }} </a></h2>
     <img src="./Per_base_sequence_content.png">
     <hr>
 

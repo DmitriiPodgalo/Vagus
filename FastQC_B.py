@@ -1,6 +1,14 @@
 import FastQC_G
 
 
+def sequence_length(parsed_file):
+    '''
+    Return min and max read length
+    '''
+    length_reads = [len(read[1]) for read in parsed_file]
+    return min(length_reads), max(length_reads)
+
+
 def count_all_GC(parsed_file):
     '''
     Count GC content over all sequenses.

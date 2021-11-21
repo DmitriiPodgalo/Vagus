@@ -52,17 +52,11 @@ def prepair_data(input, outdir):
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file, outdir)
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
     # 4
-    parsed_file_for_func = FastQC_functions.process_file(input)
-
-    qualities_per_base = FastQC_functions.calculate_quality_per_base(parsed_file_for_func)
-    dict_mean_qual = FastQC_functions.calculate_mean_quality_per_base(qualities_per_base)
-    FastQC_functions.plot_per_base_seq_quality(qualities_per_base, dict_mean_qual, outdir)
+    per_base_seq_quality_result = FastQC_functions.plot_per_base_seq_quality(parsed_file, outdir)
     # 5
-    d = FastQC_functions.per_sequence_quality(parsed_file_for_func)
-    FastQC_functions.plot_per_seq_quality_scores(d, outdir)
+    per_seq_quality_scores_result = FastQC_functions.plot_per_seq_quality_scores(parsed_file, outdir)
     # 6
-    lst_proportions = FastQC_functions.per_base_nucleotides_proportion(parsed_file_for_func)
-    FastQC_functions.plot_per_base_seq_content(lst_proportions, outdir)
+    per_base_seq_content_result = FastQC_functions.plot_per_base_seq_content(parsed_file, outdir)
     # 7
     gc_content_result = FastQC_G.draw_gc_content(parsed_file, outdir)
     # 8
@@ -73,7 +67,7 @@ def prepair_data(input, outdir):
     # Basic statistics
     Encoding = FastQC_B.encoding_detector(parsed_file)
     total_sequences = len(parsed_file)
-    sequence_length = [len(min(parsed_file_for_func[1])), len(max(parsed_file_for_func[1]))]
+    sequence_length = FastQC_B.sequence_length(parsed_file)
     mean_GC = FastQC_B.count_all_GC(parsed_file)
 
     if os.path.exists(outdir+'or_seq.csv'):
@@ -88,7 +82,7 @@ def prepair_data(input, outdir):
     if sequence_length[0] == sequence_length[1]:
         seq_length = sequence_length[0]
     else:
-        seq_length = str(sequence_length[0], '-', sequence_length[1])
+        seq_length = str(sequence_length[0])+'-'+str(sequence_length[1])
 
     # context for html report
     context = {'now': datetime.datetime.utcnow(),
@@ -98,6 +92,9 @@ def prepair_data(input, outdir):
                'total_sequences': total_sequences,
                'sequence_length': seq_length,
                'GC' : mean_GC,
+               'per_base_seq_quality_result' : per_base_seq_quality_result,
+               'per_seq_quality_scores_result' : per_seq_quality_scores_result,
+               'per_base_seq_content_result' : per_base_seq_content_result,
                'gc_content_result' : gc_content_result,
                'N_content_result' : N_content_result,
                'sequence_length_distribution_result': sequence_length_distribution_result,
