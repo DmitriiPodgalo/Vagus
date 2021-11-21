@@ -55,7 +55,7 @@ def prepair_data(input, outdir):
     parsed_file = fastqc.read_file(input)
     prepare_outdir(outdir)
     logging.info('outdir generated')
-    
+
     # 1
     sequence_length_distribution_result = fastqc.sequence_length_distribution(parsed_file, outdir)
     logging.info('sequence length distribution result generated')
