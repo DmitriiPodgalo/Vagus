@@ -9,7 +9,7 @@ In addition to the required .fastq file, a directory path for saving analysis re
 
 As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
 
-The Vagus report contains the following data:
+### The Vagus report contains the following data:
 0. **Basic statistics** - file encoding, number of reads, min and max read lenght, GC% in all reads.
 1. **Per base sequence quality** - plots out the range of quality values across all bases at each position in the FastQ file. 
     - Warning - if the lower quartile for any base is less than 10, or if the median for any base is less than 25.
