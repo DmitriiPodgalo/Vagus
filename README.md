@@ -10,15 +10,34 @@ In addition to the required .fastq file, a directory path for saving analysis re
 As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
 
 The Vagus report contains the following data:
-1. Per base sequence quality - 
-2. Per sequence quality scores
-3. Per base sequence content
-4. Per sequence GC content
-5. Per base N content
-6. Sequence length distribution
-7. Sequence duplication levels
-8. Overrepresented sequences
-9. Adapter content
+0. Basic statistics - file encoding, number of reads, min and max read lenght, GC% in all reads.
+1. Per base sequence quality - plots out the range of quality values across all bases at each position in the FastQ file. 
+    - Warning - if the lower quartile for any base is less than 10, or if the median for any base is less than 25.
+    - Failure - if the lower quartile for any base is less than 5 or if the median for any base is less than 20.
+2. Per sequence quality scores - plots out the quality scor distribution over all sequences. 
+    - Warning - if the most frequently observed mean quality is below 27.
+    - Failure - if the most frequently observed mean quality is below 20.
+3. Per base sequence content - plots out the proportion of each base position in a .fastq for which each of the four normal DNA bases has been called.
+    - Warning - if the difference between A and T, or G and C is greater than 10% in any position.
+    - Failure - if the difference between A and T, or G and C is greater than 20% in any position.
+4. Per sequence GC content - plots out the GC content across the whole length of each sequence in a file and compares it to a modelled normal distribution of GC content.
+    - Warning - if the sum of the deviations from the normal distribution represents more than 15% of the reads.
+    - Failure - if the sum of the deviations from the normal distribution represents more than 30% of the reads.
+5. Per base N content - plots out the percentage of base calls at each position for which an N was called.
+    - Warning - if any position shows an N content of >5%.
+    - Failure - if any position shows an N content of >20%.
+6. Sequence length distribution - generate plot showing the distribution of fragment sizes in the file which was analysed.
+    - Warning - if all sequences are not the same length.
+    - Failure - if any of the sequences have zero length.
+7. Sequence duplication levels -  counts the degree of duplication for every sequence in a library and creates a plot showing the relative number of sequences with different degrees of duplication.
+    - Warning - if non-unique sequences make up more than 20% of the total.
+    - Failure - if non-unique sequences make up more than 50% of the total.
+8. Overrepresented sequences - lists all of the sequence which make up more than 0.1% of the total and write it to .csv file.
+    - Warning - if any sequence is found to represent more than 0.1% of the total.
+    - Failure - if any sequence is found to represent more than 1% of the total.
+9. Adapter content - plots a cumulative percentage count of the proportion of library which has seen each of the adapter sequences at each position. 
+    - Warning - if any sequence is present in more than 5% of all reads.
+    - Failure - if any sequence is present in more than 10% of all reads.
 
 You can test the Vagus with examples .fastq file in `./Test_data` directory. 
 
@@ -193,6 +212,6 @@ poetry run python parsing_report.py -i ./Test_data/amp_res_1.fastq -o ./results_
 # Tested on
 Ubuntu 20.04 LTS, Python 3.9.5.\
 Windows 10 Pro 64x 20H2, Python 3.9.4.\
-MacOS v11.6(20G165), Python 3.9.7.\
-MacOS Big Sur v.11.2.3, Python 3.9.8.\
+MacOS v11.6 (20G165), Python 3.9.7.\
+MacOS v11.2.3 (20D91), Python 3.9.8.\
 WSL2, Ubuntu 20.04 LTS, Python 3.9.5.
