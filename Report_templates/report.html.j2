@@ -1,0 +1,174 @@
+{% macro header_text(img_path, color, content, place) %}
+
+  {% if place == 'Menu' %}
+    <span style="color:{{color}};"> {{content}} </span>
+
+  {% elif place == 'Header'%}
+    <img src="./check_img/{{img_path}}" style="display: inline-block; margin: 0;" height="32px" width="32px"> 
+    <span style="color:{{color}};"> {{content}} </span>
+  {% endif %}
+
+{% endmacro %}
+
+
+{% macro overrepresented_sequences_style(overrepresented_sequences_table) %}
+
+  {% if overrepresented_sequences_table == 'No overrepresented sequences' %}
+    <p> {{overrepresented_sequences_table}} </p>
+
+  {% else %}
+    {{ overrepresented_sequences_table }}
+  {% endif %}
+
+{% endmacro %}
+
+{% macro status_header(status, content, place) %}
+  
+  {% if status == 'failure' or status == 'Failure' %}
+    {{header_text('error.jpg', '#D14139', content, place)}}
+  
+  {% elif status == 'warning' or status == 'Warning' %}
+    {{header_text('warning.jpg', '#FF8C00', content, place)}}
+  
+  {% elif status == 'good' or status == 'Good' %}
+    {{header_text('good.jpg', '	#008000', content, place)}}
+
+  {% else %}
+    {{raise_error("unexpected status value: {}".format(status))}}
+  
+  {% endif %}
+
+{% endmacro %}
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    {# <link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css"> #}
+    <link rel="stylesheet" href="http://matejlatin.github.io/Gutenberg/example2/assets/combined.min.css">
+
+  </head>
+  
+  <style>
+    .floating-menu {
+                    font-family: sans-serif;
+                    background: ghostwhite;
+                    padding: 5px;;
+                    width: 190px;
+                    z-index: 100;
+                    position: fixed;
+                    bottom: 0px;
+                    right: 0px;
+                    font-weight: bold;
+                    }
+
+    .floating-menu a, 
+    .floating-menu h3 {
+                       font-size: 0.6em;
+                       display: block;
+                       margin: auto;
+                       text-decoration: none;
+                       }
+
+    .table_dupl  {
+      font-family: monospace;
+      text-align: center;
+      font-size: 10pt;
+      width: 100%;
+      background-color: ghostwhite;
+      }
+
+    .table_dupl td {
+      line-height: 1rem;
+      }
+
+
+  </style>
+
+  <body>
+    <h1> The Vagus. </h1>
+    <h2> Quality Report </h2>
+    <p>
+      Generated at {{now|format_datetime}}.
+    </p>
+    
+    <hr>
+
+  <nav class="floating-menu">
+    <h3>Menu</h3>
+    
+    <a href="#part_1"> {{ status_header(per_base_seq_quality_result, 'Per base sequence quality', 'Menu') }} </a>
+    <a href="#part_2"> {{ status_header(per_seq_quality_scores_result, 'Per sequence quality scores', 'Menu') }} </a>
+    <a href="#part_3"> {{ status_header(per_base_seq_content_result, 'Per base sequence content', 'Menu') }} </a>
+    <a href="#part_4"> {{ status_header(gc_content_result, 'Per sequence GC content', 'Menu') }}  </a>
+    <a href="#part_5"> {{ status_header(N_content_result, 'Per base N content', 'Menu') }} </a>
+    <a href="#part_6"> {{ status_header(sequence_length_distribution_result, 'Sequence length distribution', 'Menu') }} </a>
+    <a href="#part_7"> {{ status_header(deduplicated_result, 'Sequence duplication levels', 'Menu') }} </a>
+    <a href="#part_8"> {{ status_header(overrepresented_sequences_result, 'Overrepresented sequences', 'Menu') }} </a>
+    <a href="#part_9"> {{ status_header(adapter_content_result, 'Adapter content', 'Menu') }} </a>
+  </nav>
+
+
+    <table style="width: 100%;">
+    <tbody>
+      <TR>
+        <TD> Filename </TD>
+        <TD> {{file}} </TD>
+      </TR>
+      <TR>
+        <TD> Encoding </TD>
+        <TD> {{Encoding}} </TD>
+      </TR>
+      <TR>
+        <TD> Total Sequences </TD>
+        <TD> {{total_sequences}} </TD>
+      </TR>
+      <TR>
+        <TD> Sequence Length </TD>
+        <TD> {{sequence_length}} </TD>
+      </TR>
+      <TR>
+        <TD> %GC </TD>
+        <TD> {{GC}} </TD>
+      </TR>
+    </tbody>
+    </table>
+    <hr>
+
+    <h2><a id="part_1"> {{ status_header(per_base_seq_quality_result, 'Per base sequence quality', 'Header') }} </a></h2>
+    <img src="./Per_base_sequence_quality.png">
+    <hr>    
+
+    <h2><a id="part_2"> {{ status_header(per_seq_quality_scores_result, 'Per sequence quality scores', 'Header') }} </a></h2>
+    <img src="./Per_sequence_quality_scores.png">
+    <hr>    
+
+    <h2><a id="part_3"> {{ status_header(per_base_seq_content_result, 'Per base sequence content', 'Header') }} </a></h2>
+    <img src="./Per_base_sequence_content.png">
+    <hr>
+
+    <h2><a id="part_4"> {{ status_header(gc_content_result, 'Per sequence GC content', 'Header') }} </a></h2>
+    <img src="./gc_content.png">
+    <hr>
+
+    <h2><a id="part_5"> {{ status_header(N_content_result, 'Per base N content', 'Header') }} </a></h2>
+    <img src="./N_content.png">
+    <hr>
+
+    <h2><a id="part_6"> {{ status_header(sequence_length_distribution_result, 'Sequence length distribution', 'Header') }}  </a></h2>
+    <img src="./sequence_length_distribution.png">
+    <hr>
+
+    <h2><a id="part_7"> {{ status_header(deduplicated_result,  'Sequence duplication levels', 'Header') }} </a></h2>
+    <img src="./deduplication.png">
+    <hr>
+
+    <h2><a id="part_8"> {{ status_header(overrepresented_sequences_result, 'Overrepresented sequences', 'Header') }}  </a></h2>
+    {{ overrepresented_sequences_style(overrepresented_sequences_table) }}
+    <hr>
+
+    <h2><a id="part_9"> {{ status_header(adapter_content_result, 'Adapter content', 'Header') }}  </a></h2>
+    <img src="./adapter_content.png">
+    <hr>
+
+  </body>
+</html>
