@@ -156,10 +156,9 @@ def check_outdir(outdir, now_time):
     Check the last simbol in outdir.
     If in not the '/' - added it to path.
     '''
-    pattern_end = re.compile(r".*/$")
 
-    if pattern_end.match(outdir):
-        outdir = outdir[:-1]
+    if os.path.exists(outdir):
+        outdir = os.path.abspath(outdir) + '/'
 
     outdir = outdir + now_time
 
