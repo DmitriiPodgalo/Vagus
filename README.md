@@ -1,13 +1,6 @@
 # Vagus. FASTQ quality analyzer tool
 
 The tool allows one to analyze the quality of sequencing reads.
-The program analyzes only sequencing reads in the **.fastq** format, not .gz archives.
-
-In addition to the required .fastq file, a directory path for saving analysis results can be transferred to the program input. Otherwise, the default prefix will be used.
-
-**Important!** The time at which the report was generated will be added to output directory prefix.
-
-As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
 
 ### The Vagus report contains the following data:
 0. **Basic statistics** - file encoding, number of reads, min and max read lenght, GC% in all reads.
@@ -40,6 +33,14 @@ As a quality check result of the program's work, a **.html** file will be genera
     - Failure - if any sequence is present in more than 10% of all reads.
 
 # Try it!
+The program analyzes only sequencing reads in the **.fastq** format, not .gz archives.
+
+In addition to the required .fastq file, a directory path for saving analysis results can be transferred to the program input. Otherwise, the default prefix will be used.
+
+**Important!** The time at which the report was generated will be added to output directory prefix.
+
+As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
+
 You can test the Vagus with example .fastq file in `./Test_data` directory. 
 
 See below for a description of how to install using pip or poetry and how to get started.
