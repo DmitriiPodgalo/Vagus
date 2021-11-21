@@ -1,10 +1,10 @@
 import logging
 import datetime
-import os, shutil
+import os
+import shutil
 import re
 import pandas as pd
 
-from types import new_class
 from pathlib import Path
 import typer
 import jinja2
@@ -94,36 +94,36 @@ def prepair_data(input, outdir):
     if os.path.exists(outdir+'or_seq.csv'):
         overrepresented_sequences_table = pd.read_csv(outdir+'or_seq.csv',
                                                       names=["Sequence", "Count", "Percentage"])
-        overrepresented_sequences_table = overrepresented_sequences_table.to_html(index = False,
-                                                                                  justify = 'center',
-                                                                                  classes = 'table_dupl')
+        overrepresented_sequences_table = overrepresented_sequences_table.to_html(index=False,
+                                                                                  justify='center',
+                                                                                  classes='table_dupl')
     else:
         overrepresented_sequences_table = 'No overrepresented sequences'
-    
+
     if sequence_length[0] == sequence_length[1]:
         seq_length = sequence_length[0]
     else:
         seq_length = str(sequence_length[0])+'-'+str(sequence_length[1])
 
     input_file_short = re.search(r'\w*\.fastq$', str(input)).group(0)
-    
+
     # context for html report
     context = {'now': datetime.datetime.utcnow(),
                'file': input_file_short,
                'outdir': outdir,
-               'Encoding' : Encoding,
+               'Encoding': Encoding,
                'total_sequences': total_sequences,
                'sequence_length': seq_length,
-               'GC' : mean_GC,
+               'GC': mean_GC,
 
-               'per_base_seq_quality_result' : per_base_seq_quality_result,
-               'per_seq_quality_scores_result' : per_seq_quality_scores_result,
-               'per_base_seq_content_result' : per_base_seq_content_result,
-               'gc_content_result' : gc_content_result,
-               'N_content_result' : N_content_result,
+               'per_base_seq_quality_result': per_base_seq_quality_result,
+               'per_seq_quality_scores_result': per_seq_quality_scores_result,
+               'per_base_seq_content_result': per_base_seq_content_result,
+               'gc_content_result': gc_content_result,
+               'N_content_result': N_content_result,
                'sequence_length_distribution_result': sequence_length_distribution_result,
-               'deduplicated_result' : deduplicated_result,
-               'overrepresented_sequences_result' : overrepresented_sequences_result,
+               'deduplicated_result': deduplicated_result,
+               'overrepresented_sequences_result': overrepresented_sequences_result,
                'adapter_content_result': adapter_content_result,
                'overrepresented_sequences_table': overrepresented_sequences_table}
 
@@ -150,8 +150,6 @@ def render_report(context, template, outdir):
     with open(outdir+'Report.html', 'w') as f:
         f.write(rendered_template)
 
-    logging.info('report created')
-
 
 def check_outdir(outdir, now_time):
     '''
@@ -165,10 +163,10 @@ def check_outdir(outdir, now_time):
         outdir = outdir[:-1]
 
     outdir = outdir + now_time
-    
+
     if not pattern_start.match(outdir):
         outdir = './' + outdir
-    
+
     return outdir
 
 
