@@ -2,6 +2,7 @@ import logging
 import datetime
 from types import new_class
 import os
+import pandas as pd
 
 import typer
 import jinja2
@@ -62,6 +63,15 @@ def prepair_data(input, outdir):
     total_sequences = len(parsed_file)
     sequence_length = [len(min(parsed_file_for_func[1])), len(max(parsed_file_for_func[1]))]
     mean_GC = FastQC_B.count_all_GC(parsed_file)
+
+    if os.path.exists(outdir+'or_seq.csv'):
+        overrepresented_sequences_table = pd.read_csv(outdir+'or_seq.csv',
+                                                      names=["Sequence", "Count", "Percentage"])
+        overrepresented_sequences_table = overrepresented_sequences_table.to_html(index = False,
+                                                                                  justify = 'center',
+                                                                                  classes = 'table_dupl')
+    else:
+        overrepresented_sequences_table = 'No overrepresented sequences'
     
     if sequence_length[0] == sequence_length[1]:
         seq_length = sequence_length[0]
@@ -81,7 +91,8 @@ def prepair_data(input, outdir):
                'sequence_length_distribution_result': sequence_length_distribution_result,
                'deduplicated_result' : deduplicated_result,
                'overrepresented_sequences_result' : overrepresented_sequences_result,
-               'adapter_content_result': adapter_content_result}
+               'adapter_content_result': adapter_content_result,
+               'overrepresented_sequences_table': overrepresented_sequences_table}
 
     return context
 
