@@ -36,23 +36,23 @@ def count_gc_content(line):
 
 
 def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
-    gc_content = [count_gc_content(read[1]) for read in parsed_file]    
+    gc_content = [count_gc_content(read[1]) for read in parsed_file]
     gc_content = np.array(gc_content)
     median = np.median(gc_content)
     sd = np.std(gc_content)
     xx = np.arange(0, 100, 1)
     y = kde(gc_content, xx)
-    fig, ax = plt.subplots(figsize=(8,6))
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(xx[:-1], y, color='#D14139', label='GC count per read')
 
-    theoretical_y = stats.norm.pdf(xx[:-1], loc = median, scale = sd) * len(parsed_file)
+    theoretical_y = stats.norm.pdf(xx[:-1], loc=median, scale=sd) * len(parsed_file)
     ax.plot(xx[:-1], theoretical_y, color='#1D2DD8', label='Theoretical Distribution')
     plt.xticks(range(0, 100, 10))
     plt.title('GC distribution over all sequences')
     plt.xlabel('Mean GC content (%)')
 
     plt.legend()
-    plt.grid(alpha = 0.5)
+    plt.grid(alpha=0.5)
     plt.gcf().set_size_inches(8, 6)
     plt.savefig(DEFAULT_OUTPUT_DIR+'gc_content.png', dpi=100, bbox_inches='tight')
     plt.close()
@@ -69,14 +69,14 @@ def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
 
 def draw_N_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     length_dict = {}
-    
+
     for read in parsed_file:
         length = len(read[1])
         if length in length_dict.keys():
             length_dict[length] += 1
         else:
             length_dict[length] = 1
-            
+
     max_length = max(length_dict.keys())
     N_counter = [0 for i in range(max_length)]
     Read_counter = [0 for i in range(max_length)]
@@ -88,25 +88,25 @@ def draw_N_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
             else:
                 Read_counter[i] += 1
 
-    N_content = [N_counter[i] / Read_counter[i] for i in range(len(N_counter))]    
+    N_content = [N_counter[i] / Read_counter[i] for i in range(len(N_counter))]
     N_content = np.array(N_content)
-    
-    fig, ax = plt.subplots(figsize=(8,6))
+
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(range(len(N_content)), N_content * 100, color='#D14139', label='%N')
     plt.yticks(range(0, 100, 10))
     plt.title('N content across all bases')
     plt.xlabel('Position in read (bp)')
 
     plt.legend()
-    plt.grid(alpha = 0.5)
+    plt.grid(alpha=0.5)
     plt.gcf().set_size_inches(8, 6)
     plt.savefig(DEFAULT_OUTPUT_DIR+'N_content.png', dpi=100, bbox_inches='tight')
     plt.close()
 
-    max_content = np.max(N_content * 100) 
+    max_content = np.max(N_content * 100)
     if max_content > 20:
         return 'Failure'
-    
+
     if max_content > 5:
         return 'Warning'
 
@@ -120,19 +120,19 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
             reads_count[read[1]] += 1
         else:
             reads_count[read[1]] = 1
-    
+
     counts = [a for a in reads_count.values()]
     total_number = len(parsed_file)
     distinct_number = len(reads_count)
-    
+
     percent = round(100 * distinct_number / total_number, 2)
-    
+
     lower = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 500, 1000, 5000, 10000]
     upper = lower[1:] + [1e10]
-    
+
     y_sum = []
     y_len = []
-    
+
     for i in range(len(lower)):
         low = lower[i]
         hight = upper[i]
@@ -152,11 +152,10 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     plt.title('Percent of seq remaining if deduplicated ' + str(percent) + '%')
     plt.xlabel('Sequence duplication level')
     plt.legend()
-    plt.grid(alpha = 0.5)
+    plt.grid(alpha=0.5)
     plt.gcf().set_size_inches(8, 6)
     plt.savefig(DEFAULT_OUTPUT_DIR+'deduplication.png', dpi=100, bbox_inches='tight')
     plt.close()
-
 
     counts = np.array(counts)
     non_unique_seq_frac = np.sum(counts[counts > 1]) / total_number * 100
@@ -166,7 +165,7 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
 
     if non_unique_seq_frac > 20:
         return 'Warning'
-    
+
     return 'Good'
 
 
