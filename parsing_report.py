@@ -164,9 +164,6 @@ def check_outdir(outdir, now_time):
 
     outdir = outdir + now_time
 
-    if not pattern_start.match(outdir):
-        outdir = './' + outdir
-
     return outdir
 
 
