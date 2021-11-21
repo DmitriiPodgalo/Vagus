@@ -9,10 +9,10 @@ from pathlib import Path
 import typer
 import jinja2
 
-import fastqc
-import FastQC_functions
-import FastQC_G
-import FastQC_B
+from Analysis_functions import fastqc
+from Analysis_functions import FastQC_functions
+from Analysis_functions import FastQC_G
+from Analysis_functions import FastQC_B
 
 
 app = typer.Typer()
