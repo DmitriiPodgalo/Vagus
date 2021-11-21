@@ -43,10 +43,10 @@ def draw_gc_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     xx = np.arange(0, 100, 1)
     y = kde(gc_content, xx)
     fig, ax = plt.subplots(figsize=(8,6))
-    ax.plot(xx[:-1], y, color='red', label='GC count per read')
+    ax.plot(xx[:-1], y, color='#D14139', label='GC count per read')
 
     theoretical_y = stats.norm.pdf(xx[:-1], loc = median, scale = sd) * len(parsed_file)
-    ax.plot(xx[:-1], theoretical_y, color='blue', label='Theoretical Distribution')
+    ax.plot(xx[:-1], theoretical_y, color='#1D2DD8', label='Theoretical Distribution')
     plt.xticks(range(0, 100, 10))
     plt.title('GC distribution over all sequences')
     plt.xlabel('Mean GC content (%)')
@@ -92,7 +92,7 @@ def draw_N_content(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     N_content = np.array(N_content)
     
     fig, ax = plt.subplots(figsize=(8,6))
-    ax.plot(range(len(N_content)), N_content * 100, color='red', label='%N')
+    ax.plot(range(len(N_content)), N_content * 100, color='#D14139', label='%N')
     plt.yticks(range(0, 100, 10))
     plt.title('N content across all bases')
     plt.xlabel('Position in read (bp)')
@@ -145,8 +145,8 @@ def draw_deduplicated(parsed_file, DEFAULT_OUTPUT_DIR='./Report_data/'):
     y_sum = [100 * x / total_number for x in y_sum]
     y_len = [100 * x / distinct_number for x in y_len]
 
-    plt.plot(y_len, color='red', label='Deduplicated sequences')
-    plt.plot(y_sum, color='blue', label='Total sequences')
+    plt.plot(y_len, color='#D14139', label='Deduplicated sequences')
+    plt.plot(y_sum, color='#1D2DD8', label='Total sequences')
     plt.xticks(x_values, x_ticks)
     plt.yticks(range(0, 100, 10))
     plt.title('Percent of seq remaining if deduplicated ' + str(percent) + '%')
