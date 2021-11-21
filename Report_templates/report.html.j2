@@ -14,13 +14,13 @@
 {% macro status_header(status, content, place) %}
   
   {% if status == 'failure' or status == 'Failure' %}
-    {{header_text('error.jpg', 'red', content, place)}}
+    {{header_text('error.jpg', '#D14139', content, place)}}
   
   {% elif status == 'warning' or status == 'Warning' %}
-    {{header_text('warning.jpg', 'orange', content, place)}}
+    {{header_text('warning.jpg', '#FF8C00', content, place)}}
   
   {% elif status == 'good' or status == 'Good' %}
-    {{header_text('good.jpg', 'green', content, place)}}
+    {{header_text('good.jpg', '	#008000', content, place)}}
 
   {% else %}
     {{raise_error("unexpected status value: {}".format(status))}}
@@ -58,14 +58,18 @@
                        text-decoration: none;
                        }
 
-     .table_dupl {
-       font-family: monospace;
-       text-align: center;
-       font-size: 10pt;
-       width: 100%;
-       background-color: azure;
-       padding: 0.4em;
-       }
+    .table_dupl  {
+      font-family: monospace;
+      text-align: center;
+      font-size: 10pt;
+      width: 100%;
+      background-color: ghostwhite;
+      }
+
+    .table_dupl td {
+      line-height: 1rem;
+      }
+
 
   </style>
 
