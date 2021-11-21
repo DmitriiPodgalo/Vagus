@@ -44,7 +44,7 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python3 parsing_report.py --help
-python3 parsing_report.py --i "input_file.fastq" -o ./out_dir/
+python3 parsing_report.py -i "input_file.fastq" -o ./out_dir/
 ```
 
 # Install and run with poetry (Ubuntu)
@@ -70,7 +70,7 @@ poetry install
 
 # Run file (with python 3.9 or 3.10)
 poetry run parsing_report.py --help
-poetry run parsing_report.py --i "input_file.fastq" -o ./out_dir/
+poetry run parsing_report.py -i "input_file.fastq" -o ./out_dir/
 ```
 
 # Install and run with pip (Windows)
@@ -103,7 +103,7 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python parsing_report.py --help
-python parsing_report.py --i "input_file.fastq" -o ./out_dir/
+python parsing_report.py -i "input_file.fastq" -o ./out_dir/
 ```
 
 # Install and run with poetry (Windows)
@@ -129,9 +129,10 @@ poetry install
 
 # Run
 poetry run parsing_report.py --help
-poetry run parsing_report.py --i "input_file.fastq" -o ./out_dir/
+poetry run parsing_report.py -i "input_file.fastq" -o ./out_dir/
 ```
 
 # Tested on
 Ubuntu 20.04 LTS, Python 3.9.5.
 Windows 10 Pro 64x 20H2, Python 3.9.4.
+MacOS v11.6(20G165), Python 3.9.7.

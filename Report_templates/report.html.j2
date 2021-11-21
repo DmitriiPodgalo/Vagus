@@ -11,6 +11,17 @@
 {% endmacro %}
 
 
+{% macro overrepresented_sequences_style(overrepresented_sequences_table) %}
+
+  {% if overrepresented_sequences_table == 'No overrepresented sequences' %}
+    <span style="margin-right: auto!important; margin-left: auto!important;"> {{overrepresented_sequences_table}} </span>
+
+  {% elif place == 'Header'%}
+    {{ overrepresented_sequences_table }}
+  {% endif %}
+
+{% endmacro %}
+
 {% macro status_header(status, content, place) %}
   
   {% if status == 'failure' or status == 'Failure' %}
@@ -151,7 +162,7 @@
     <hr>
 
     <h2><a id="part_8"> {{ status_header(overrepresented_sequences_result, 'Overrepresented sequences', 'Header') }}  </a></h2>
-    {{overrepresented_sequences_table}}
+    {{ overrepresented_sequences_style(overrepresented_sequences_table) }}
     <hr>
 
     <h2><a id="part_9"> {{ status_header(adapter_content_result, 'Adapter content', 'Header') }}  </a></h2>

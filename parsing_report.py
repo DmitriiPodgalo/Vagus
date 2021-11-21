@@ -23,6 +23,13 @@ def format_datetime(context, value):
     return value.strftime('%d/%m/%y  %H:%M:%S')
 
 
+def directory_datetime():
+    '''
+    Return NOW string for directory name.
+    '''
+    return datetime.datetime.now().strftime('%Y%b%d_%H_%M/')
+
+
 def raise_error(text):
     raise Exception(text)
 
@@ -47,9 +54,11 @@ def prepair_data(input, outdir):
     parsed_file = fastqc.read_file(input)
     prepare_outdir(outdir)
     
-    # 1-3
+    # 1
     sequence_length_distribution_result = fastqc.sequence_length_distribution(parsed_file, outdir)
+    # 2
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file, outdir)
+    # 3
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
     # 4
     per_base_seq_quality_result = FastQC_functions.plot_per_base_seq_quality(parsed_file, outdir)
@@ -61,7 +70,7 @@ def prepair_data(input, outdir):
     gc_content_result = FastQC_G.draw_gc_content(parsed_file, outdir)
     # 8
     N_content_result = FastQC_G.draw_N_content(parsed_file, outdir)
-    #6
+    # 9
     deduplicated_result = FastQC_G.draw_deduplicated(parsed_file, outdir)
 
     # Basic statistics
@@ -84,14 +93,17 @@ def prepair_data(input, outdir):
     else:
         seq_length = str(sequence_length[0])+'-'+str(sequence_length[1])
 
+    input_file_short = re.search(r'\w*\.fastq$', str(input)).group(0)
+    
     # context for html report
     context = {'now': datetime.datetime.utcnow(),
-               'file': input,
+               'file': input_file_short,
                'outdir': outdir,
                'Encoding' : Encoding,
                'total_sequences': total_sequences,
                'sequence_length': seq_length,
                'GC' : mean_GC,
+
                'per_base_seq_quality_result' : per_base_seq_quality_result,
                'per_seq_quality_scores_result' : per_seq_quality_scores_result,
                'per_base_seq_content_result' : per_base_seq_content_result,
@@ -129,7 +141,7 @@ def render_report(context, template, outdir):
     logging.info('report created')
 
 
-def check_outdir(outdir):
+def check_outdir(outdir, now_time):
     '''
     Check the last simbol in outdir.
     If in not the '/' - added it to path.
@@ -137,8 +149,10 @@ def check_outdir(outdir):
     pattern_end = re.compile(r".*/$")
     pattern_start = re.compile(r"\./.*/$")
 
-    if not pattern_end.match(outdir):
-        outdir = outdir + '/'
+    if pattern_end.match(outdir):
+        outdir = outdir[:-1]
+
+    outdir = outdir + now_time
     
     if not pattern_start.match(outdir):
         outdir = './' + outdir
@@ -146,8 +160,9 @@ def check_outdir(outdir):
     return outdir
 
 
+now_time = directory_datetime()
 DEFAULT_TEMPLATE = './Report_templates/report.html.j2'
-DEFAULT_OUTPUT_DIR = './Report_data/'
+DEFAULT_OUTPUT_DIR = './Report_data' + now_time
 
 
 @app.command()
@@ -166,7 +181,9 @@ def generate(input: Path = typer.Option(...,
              template: str = DEFAULT_TEMPLATE,
              log_level: str = 'info'):
 
-    outdir = check_outdir(outdir)
+    logging.basicConfig(level=getattr(logging, log_level.upper()))
+
+    outdir = check_outdir(outdir, now_time)
 
     context = prepair_data(input, outdir)
     render_report(context, template, outdir)

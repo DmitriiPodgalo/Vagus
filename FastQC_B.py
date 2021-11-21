@@ -1,6 +1,5 @@
 import FastQC_G
 
-
 def sequence_length(parsed_file):
     '''
     Return min and max read length
