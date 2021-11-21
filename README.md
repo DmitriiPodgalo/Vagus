@@ -39,15 +39,16 @@ As a quality check result of the program's work, a **.html** file will be genera
     - Warning - if any sequence is present in more than 5% of all reads.
     - Failure - if any sequence is present in more than 10% of all reads.
 
-You can test the Vagus with examples .fastq file in `./Test_data` directory. 
+# Try it!
+You can test the Vagus with example .fastq file in `./Test_data` directory. 
 
 See below for a description of how to install using pip or poetry and how to get started.
 
 While the program is running, the progress of the work is displayed in the console.
 
+# Requiered dependencies
 Required Python version [3.9-3.10].
 
-# Requiered dependencies
 All dependencies can be installed via pip or poetry.
 ``` console
 Jinja2 = "3.0.2"
