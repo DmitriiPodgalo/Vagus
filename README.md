@@ -1,12 +1,28 @@
-## Vagus. FASTQ quality analyzer tool
+# Vagus. FASTQ quality analyzer tool
 
-Tool is able to:
+The tool allows one to analyze the quality of sequencing reads.
+The program analyzes only sequencing reads in the **.fastq** format, not .gz archives.
+
+In addition to the required .fastq file, a directory path for saving analysis results can be transferred to the program input. Otherwise, the default prefix will be used.
+
+**Important!** The time at which the report was generated will be added to output directory prefix.
+
+As a quality check result of the program's work, a **.html** file will be generated. The **.html** report will work correctly only together with the generated .png and .csv files from the output folder.
+
+The Vagus report contains the following data:
 1. ...
 2. ...
+
+You can test the Vagus with examples .fastq file in `./Test_data` directory. 
+
+See below for a description of how to install using pip or poetry and how to get started.
+
+While the program is running, the progress of the work is displayed in the console.
 
 Required Python version [3.9-3.10].
 
 # Requiered dependencies
+All dependencies can be installed via pip or poetry.
 ``` console
 Jinja2 = "3.0.2"
 typer = "^0"
@@ -17,10 +33,8 @@ seaborn="0.11.2"
 pandas="1.3.4"
 click=="8.0.3"
 ```
-All requrements are installed via pip or poetry.
 
-
-# Install and run with pip (Ubuntu)
+## Install and run with pip (Ubuntu)
 ```console
 git clone https://github.com/DmitriiPodgalo/Vagus.git
 cd Vagus/
@@ -44,10 +58,10 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python3 parsing_report.py --help
-python3 parsing_report.py -i "input_file.fastq" -o ./out_dir/
+python3 parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
 ```
 
-# Install and run with poetry (Ubuntu)
+## Install and run with poetry (Ubuntu)
 ```console
 # install poetry
 # for details look for https://python-poetry.org/docs/
@@ -69,11 +83,11 @@ poetry env use python3
 poetry install 
 
 # Run file (with python 3.9 or 3.10)
-poetry run parsing_report.py --help
-poetry run parsing_report.py -i "input_file.fastq" -o ./out_dir/
+poetry run python parsing_report.py --help
+poetry run python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
 ```
 
-# Install and run with pip (Windows)
+## Install and run with pip (Windows)
 ```console
 git clone https://github.com/DmitriiPodgalo/Vagus.git
 cd Vagus/
@@ -103,10 +117,10 @@ pip install -r ./requirements.txt
 
 # Run file (with python 3.9 or 3.10)
 python parsing_report.py --help
-python parsing_report.py -i "input_file.fastq" -o ./out_dir/
+python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
 ```
 
-# Install and run with poetry (Windows)
+## Install and run with poetry (Windows)
 ```console
 ## run PowerShell as administrator!
 
@@ -128,8 +142,8 @@ poetry env use python
 poetry install
 
 # Run
-poetry run parsing_report.py --help
-poetry run parsing_report.py -i "input_file.fastq" -o ./out_dir/
+poetry run python parsing_report.py --help
+poetry run python parsing_report.py -i ./Test_data/amp_res_2_failed.fastq -o ./results_dir/
 ```
 
 # Tested on

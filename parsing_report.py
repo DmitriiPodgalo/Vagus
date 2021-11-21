@@ -43,7 +43,7 @@ def prepare_outdir(outdir):
         os.makedirs(outdir)
 
     if not os.path.exists(outdir + 'check_img/error.jpg'):
-        shutil.copytree('./Report_data/check_img/', outdir + 'check_img/', dirs_exist_ok=True)
+        shutil.copytree('./Report_templates/check_img/', outdir + 'check_img/')
 
 
 def prepair_data(input, outdir):
@@ -52,7 +52,7 @@ def prepair_data(input, outdir):
     Save plots to "outdir_DATE_TIME/".
     Print log to console.
     '''
-    parsed_file = fastqc.read_file(input)
+    parsed_file = FastQC_functions.read_file(input)
     prepare_outdir(outdir)
     logging.info('outdir generated')
 
@@ -61,7 +61,7 @@ def prepair_data(input, outdir):
     logging.info('sequence length distribution result generated')
     # 2
     overrepresented_sequences_result = fastqc.overrepresented_sequences(parsed_file, outdir)
-    logging.info('sequence length distribution result generated')
+    logging.info('overrepresented sequences result generated')
     # 3
     adapter_content_result = fastqc.adapter_content(parsed_file, outdir)
     logging.info('adapter content result generated')
